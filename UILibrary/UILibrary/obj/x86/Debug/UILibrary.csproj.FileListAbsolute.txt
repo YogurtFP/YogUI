@@ -1,0 +1,8 @@
+c:\Users\Developer\Documents\Visual Studio 2010\Projects\UILibrary\UILibrary\UILibrary\obj\x86\Debug\ResolveAssemblyReference.cache
+c:\Users\Developer\Documents\Visual Studio 2010\Projects\UILibrary\UILibrary\UILibrary\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
+c:\Users\Developer\Documents\Visual Studio 2010\Projects\UILibrary\UILibrary\UILibrary\bin\x86\Debug\UILibrary.exe
+c:\Users\Developer\Documents\Visual Studio 2010\Projects\UILibrary\UILibrary\UILibrary\bin\x86\Debug\UILibrary.pdb
+c:\Users\Developer\Documents\Visual Studio 2010\Projects\UILibrary\UILibrary\UILibrary\obj\x86\Debug\UILibrary.exe
+c:\Users\Developer\Documents\Visual Studio 2010\Projects\UILibrary\UILibrary\UILibrary\obj\x86\Debug\UILibrary.pdb
+c:\Users\Developer\Documents\Visual Studio 2010\Projects\UILibrary\UILibrary\UILibrary\bin\x86\Debug\Content\Console.xnb
+c:\Users\Developer\Documents\Visual Studio 2010\Projects\UILibrary\UILibrary\UILibrary\bin\x86\Debug\Content\CircleShader.xnb
