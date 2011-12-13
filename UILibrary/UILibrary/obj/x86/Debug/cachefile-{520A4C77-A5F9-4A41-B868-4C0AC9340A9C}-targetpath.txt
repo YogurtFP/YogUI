@@ -1,2 +1,0 @@
-Content\Console.xnb
-Content\CircleShader.xnb
