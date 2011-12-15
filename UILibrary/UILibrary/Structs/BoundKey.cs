@@ -12,7 +12,7 @@ namespace YogUI.Code.Structs
         public string identifier = "bind";
         public bool constant;
         public bool press;
-
+        //test
 
         public CodeBoundKey(Action a, Keys key, bool constant = false, bool pressing = true, string identifier = "bind")
         {
