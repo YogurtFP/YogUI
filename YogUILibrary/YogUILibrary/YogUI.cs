@@ -18,7 +18,7 @@ namespace YogUILibrary
         public static Effect circleShader;
         public static InputManager inputManager;
 
-        public static void YogUI_Init(Game game)
+        public static void YogUI_LoadContent(Game game)
         {
             content = new ResourceContentManager(game.Services, Resource1.ResourceManager);
             white = new Texture2D(game.GraphicsDevice, 1, 1);
