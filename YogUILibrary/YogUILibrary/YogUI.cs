@@ -17,6 +17,7 @@ namespace YogUILibrary
         public static Texture2D white;
         public static Effect circleShader;
         public static InputManager inputManager;
+        public static Game theGame;
 
         public static void YogUI_LoadContent(Game game)
         {
@@ -25,6 +26,7 @@ namespace YogUILibrary
             white.SetData<Color>(new Color[] { Color.White });
             circleShader = content.Load<Effect>("CircleShader");
             inputManager = new InputManager();
+            theGame = game;
         }
 
         public static void YogUI_Update(GameTime time)
