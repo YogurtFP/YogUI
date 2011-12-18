@@ -16,6 +16,7 @@ namespace YogUILibrary.Code.UIComponents
         string oldInput = "";
         private bool dragging = false, hovering = false;
         private float width, height;
+        private string defaultText = "";
 
         public override Rectangle BoundBox
         {
@@ -82,6 +83,11 @@ namespace YogUILibrary.Code.UIComponents
 
         }
 
+        public void setDefaultText(string text)
+        {
+            defaultText = text;
+        }
+
         public int numCharsAllowed()
         {
             float length = input.tdI.font.MeasureString(" ").X;
@@ -127,7 +133,20 @@ namespace YogUILibrary.Code.UIComponents
             {
                 DrawManager.Draw_Box(topLeft, bottomRight, backgroundColor, sb, 0f, backgroundColor.A);
                 DrawManager.Draw_Outline(topLeft, bottomRight, borderColor, sb, borderColor.A);
+                bool defaulted = false;
+                Color oldColor = input.tdI.color;
+                if (!input.selected && input.input == "" && defaultText != "")
+                {
+                    input.input = defaultText;
+                    defaulted = true;
+                    input.tdI.color = Color.Gray;
+                }
                 input.Draw(sb);
+                if (defaulted)
+                {
+                    input.input = "";
+                    input.tdI.color = oldColor;
+                }
             }
 
             base.Draw(sb);
