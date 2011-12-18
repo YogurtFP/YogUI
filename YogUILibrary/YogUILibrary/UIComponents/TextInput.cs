@@ -177,7 +177,26 @@ namespace YogUILibrary.Code.UIComponents
                 }
             }, Keys.V);
             InputManager.BindKey(() => { string a = ShiftHeld() ? keyPressed("W") : keyPressed("w"); }, Keys.W);
-            InputManager.BindKey(() => { string a = ShiftHeld() ? keyPressed("X") : keyPressed("x"); }, Keys.X);
+            InputManager.BindKey(() =>
+            {
+                if (!(active && selected)) return;
+                if (ShiftHeld())
+                {
+                    keyPressed("X");
+                }
+                else
+                {
+                    if (InputManager.isKeyPressed(Keys.LeftControl) || InputManager.isKeyPressed(Keys.RightControl))
+                    {
+                        System.Windows.Forms.Clipboard.SetText(selectedText != "" ? selectedText : System.Windows.Forms.Clipboard.GetText());
+                        keyPressed("backspace");
+                    }
+                    else
+                    {
+                        keyPressed("x");
+                    }
+                }
+            }, Keys.X);
             InputManager.BindKey(() => { string a = ShiftHeld() ? keyPressed("Y") : keyPressed("y"); }, Keys.Y);
             InputManager.BindKey(() => { string a = ShiftHeld() ? keyPressed("Z") : keyPressed("z"); }, Keys.Z);
             InputManager.BindKey(() => { string a = ShiftHeld() ? keyPressed(")") : keyPressed("0"); }, Keys.D0);
