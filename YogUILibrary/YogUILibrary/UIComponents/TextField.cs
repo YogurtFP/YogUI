@@ -85,13 +85,16 @@ namespace YogUILibrary.Code.UIComponents
 
         public void setDefaultText(string text)
         {
-            defaultText = text;
+            if (text.Length > numCharsAllowed())
+                defaultText = text.Remove(numCharsAllowed());
+            else
+                defaultText = text;
         }
 
         public int numCharsAllowed()
         {
             float length = input.tdI.font.MeasureString(" ").X;
-            return (int)(width / length) - 1;
+            return (int)(width / length);
         }
 
         public void SetPosition(Vector2 pos)

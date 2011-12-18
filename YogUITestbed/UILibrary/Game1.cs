@@ -71,7 +71,7 @@ namespace YogUITestBed
             //White text, Black background, White border, SpriteFont font, doing nothing on text enter, and nothing on text changed.
             textField = new TextField(new Vector2(0, 10), 100, 20, Color.White, Color.Black, Color.White, font, (string s) => { /*Pressed Enter*/ }, (string s) => { /*Text changed*/});
             textField.SetText("TextField");
-            textField.setDefaultText("Test");
+            textField.setDefaultText("Default text");
 
             //Create a new ListBox at (0, 50), 90 width, 100 height, and doing nothing on Selected Index Changed.
             listBox = new ListBox(new Vector2(0, 50), 90, 100, font, () => { /*Selected Index Changed*/});
