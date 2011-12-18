@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using YogUILibrary.Code.Managers;
+using YogUILibrary.Structs;
 namespace YogUILibrary
 {
     public class YogUI
@@ -33,5 +34,9 @@ namespace YogUILibrary
         {
             inputManager.Update(time);
         }
+        /*Placeholder
+        private static NinePatch LoadNinepatch(string name, ContentManager content, Game game)
+        {
+        }*/
     }
 }
