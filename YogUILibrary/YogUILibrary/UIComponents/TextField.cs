@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using YogUILibrary.Code.Managers;
+using YogUILibrary.Code.Structs;
 namespace YogUILibrary.Code.UIComponents
 {
     public class TextField : UIComponent
@@ -17,6 +18,7 @@ namespace YogUILibrary.Code.UIComponents
         private bool dragging = false, hovering = false;
         private float width, height;
         private string placeHolderText = "";
+        DropDownList contextMenu;
 
         public override Rectangle BoundBox
         {
@@ -38,15 +40,16 @@ namespace YogUILibrary.Code.UIComponents
             this.borderColor = borderColor;
             this.onTextEnter = onTextEnter;
             this.onTextChanged = onTextChanged;
+            contextMenu = new DropDownList(Vector2.Zero, font);
+            contextMenu.AddItem(new DropDownItem("Copy", input.Copy));
+            contextMenu.AddItem(new DropDownItem("Paste", input.Paste));
+            contextMenu.AddItem(new DropDownItem("Cut", input.Cut));
             base.UIC_Initialize();
             input.numCharsAllowed = numCharsAllowed();
 
             InputManager.BindMouse(() =>
             {
-                if (hovering)
-                    input.selected = true;
-                else
-                    input.selected = false;
+                input.selected = hovering;
 
                 float charLength = input.getCharLength();
                 float xDist = InputManager.GetMousePos().X - input.BoundBox.Left;
@@ -80,6 +83,19 @@ namespace YogUILibrary.Code.UIComponents
                     input.cursorPos = pos;
                 }
             }, MouseButton.Movement, true, true);
+
+            InputManager.BindMouse(() =>
+                {
+                    input.selected = hovering;
+                    float charLength = input.getCharLength();
+                    float xDist = InputManager.GetMousePos().X - input.BoundBox.Left;
+                    int pos = (int)MathHelper.Clamp(xDist / charLength, 0, input.input.Length - input.offset);
+                    pos += input.offset;
+                    input.cursorPos = pos;
+
+                    contextMenu.Position = InputManager.GetMousePosV() - new Vector2(3);
+                    contextMenu.Show();
+                }, MouseButton.Right);
 
         }
 
@@ -125,6 +141,7 @@ namespace YogUILibrary.Code.UIComponents
                 }
 
                 input.Update(time);
+                contextMenu.Update(time);
             }
             oldInput = input.input;
             base.Update(time);
@@ -150,6 +167,8 @@ namespace YogUILibrary.Code.UIComponents
                     input.tdI.text = "";
                     input.tdI.color = oldColor;
                 }
+
+                contextMenu.Draw(sb);
             }
 
             base.Draw(sb);

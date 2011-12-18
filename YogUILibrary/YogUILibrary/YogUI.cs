@@ -19,7 +19,7 @@ namespace YogUILibrary
         public static Effect circleShader;
         public static InputManager inputManager;
         public static Game theGame;
-
+        
         public static void YogUI_LoadContent(Game game)
         {
             content = new ResourceContentManager(game.Services, Resource1.ResourceManager);

@@ -27,10 +27,10 @@ namespace YogUILibrary.Code.UIComponents
 
         public DropDownList(Vector2 position, SpriteFont font)
         {
-            InputManager.BindMouse(() => { if (active) { Hide(); } }, MouseButton.Right, true);
             Position = position;
             this.font = font;
             base.UIC_Initialize();
+            Hide();
         }
 
         public override void OnMouseOff()
@@ -41,6 +41,7 @@ namespace YogUILibrary.Code.UIComponents
 
         public override void OnMouseClick()
         {
+            if (!active) return;
             CalculateSelected();
             DropDownItem d = items[selectedItem];
             if (d.onClick != null)
@@ -58,6 +59,7 @@ namespace YogUILibrary.Code.UIComponents
 
         public override void Draw(SpriteBatch sb)
         {
+            if (!active) return;
             CalculateSelected();
             Vector2 drawPos = new Vector2(Position.X + 2, Position.Y);
             Vector2 topLeftPos = Position;

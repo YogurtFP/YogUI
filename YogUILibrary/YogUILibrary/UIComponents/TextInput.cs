@@ -101,7 +101,7 @@ namespace YogUILibrary.Code.UIComponents
 
             InputManager.BindKey(() =>
             {
-                if(!(active && selected)) return;
+                if (!(active && selected)) return;
                 if (ShiftHeld())
                 {
                     keyPressed("A");
@@ -122,7 +122,7 @@ namespace YogUILibrary.Code.UIComponents
             InputManager.BindKey(() => { string a = ShiftHeld() ? keyPressed("B") : keyPressed("b"); }, Keys.B);
             InputManager.BindKey(() =>
             {
-                if(!(active && selected)) return;
+                if (!(active && selected)) return;
                 if (ShiftHeld())
                 {
                     keyPressed("C");
@@ -131,7 +131,7 @@ namespace YogUILibrary.Code.UIComponents
                 {
                     if (InputManager.isKeyPressed(Keys.LeftControl) || InputManager.isKeyPressed(Keys.RightControl))
                     {
-                        System.Windows.Forms.Clipboard.SetText(selectedText != "" ? selectedText : System.Windows.Forms.Clipboard.GetText());
+                        Copy();
                     }
                     else
                     {
@@ -168,7 +168,7 @@ namespace YogUILibrary.Code.UIComponents
                 {
                     if (InputManager.isKeyPressed(Keys.LeftControl) || InputManager.isKeyPressed(Keys.RightControl))
                     {
-                        keyPressed(System.Windows.Forms.Clipboard.GetText());
+                        Paste();
                     }
                     else
                     {
@@ -188,8 +188,7 @@ namespace YogUILibrary.Code.UIComponents
                 {
                     if (InputManager.isKeyPressed(Keys.LeftControl) || InputManager.isKeyPressed(Keys.RightControl))
                     {
-                        System.Windows.Forms.Clipboard.SetText(selectedText != "" ? selectedText : System.Windows.Forms.Clipboard.GetText());
-                        keyPressed("backspace");
+                        Cut();
                     }
                     else
                     {
@@ -465,6 +464,25 @@ namespace YogUILibrary.Code.UIComponents
             if (mainDelim != null)
                 sb.DrawString(tdI.font, mainDelim, tdI.Position + new Vector2(xToDrawDelim, 0), Color.White);
             //base.Draw();
+        }
+
+        internal void Copy()
+        {
+            if (selectedText != "")
+            {
+                System.Windows.Forms.Clipboard.SetText(selectedText);
+            }
+        }
+        internal void Paste()
+        {
+            if (System.Windows.Forms.Clipboard.ContainsText())
+                keyPressed(System.Windows.Forms.Clipboard.GetText());
+        }
+
+        internal void Cut()
+        {
+            Copy();
+            keyPressed("backspace");
         }
 
 

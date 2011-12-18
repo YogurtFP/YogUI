@@ -102,9 +102,8 @@ namespace YogUILibrary.Code.Managers
                         }
                     }
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
-
                 }
 
                 try
@@ -126,7 +125,7 @@ namespace YogUILibrary.Code.Managers
                         }
                     }
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
 
                 }

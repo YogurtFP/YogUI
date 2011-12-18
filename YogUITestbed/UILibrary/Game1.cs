@@ -73,8 +73,8 @@ namespace YogUITestBed
             textField.SetText("TextField");
             textField.setPlaceHolderText("Default text");
 
-            //Create a new ListBox at (0, 50), 90 width, 100 height, and doing nothing on Selected Index Changed.
-            listBox = new ListBox(new Vector2(0, 50), 90, 100, font, () => { /*Selected Index Changed*/});
+            //Create a new ListBox at (0, 150), 90 width, 100 height, and doing nothing on Selected Index Changed.
+            listBox = new ListBox(new Vector2(0, 150), 90, 100, font, () => { /*Selected Index Changed*/});
             listBox.dataSource = new string[] { "Index 1", "Index 2", "Index 3" }.ToList<string>();
 
             //Create a new ProgressBar at (150, 100), 100 width, 30 height, 50% progress.
