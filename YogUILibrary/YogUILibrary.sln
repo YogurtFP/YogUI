@@ -3,6 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual C# Express 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YogUILibrary", "YogUILibrary\YogUILibrary.csproj", "{278A824D-60AF-440D-96C3-E0E125527EE5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestBed", "..\YogUITestbed\UILibrary\TestBed.csproj", "{A2251A7C-E6F1-4A59-A806-B1827B7DCD81}"
+	ProjectSection(ProjectDependencies) = postProject
+		{278A824D-60AF-440D-96C3-E0E125527EE5} = {278A824D-60AF-440D-96C3-E0E125527EE5}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -13,6 +18,10 @@ Global
 		{278A824D-60AF-440D-96C3-E0E125527EE5}.Debug|x86.Build.0 = Debug|x86
 		{278A824D-60AF-440D-96C3-E0E125527EE5}.Release|x86.ActiveCfg = Release|x86
 		{278A824D-60AF-440D-96C3-E0E125527EE5}.Release|x86.Build.0 = Release|x86
+		{A2251A7C-E6F1-4A59-A806-B1827B7DCD81}.Debug|x86.ActiveCfg = Debug|x86
+		{A2251A7C-E6F1-4A59-A806-B1827B7DCD81}.Debug|x86.Build.0 = Debug|x86
+		{A2251A7C-E6F1-4A59-A806-B1827B7DCD81}.Release|x86.ActiveCfg = Release|x86
+		{A2251A7C-E6F1-4A59-A806-B1827B7DCD81}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

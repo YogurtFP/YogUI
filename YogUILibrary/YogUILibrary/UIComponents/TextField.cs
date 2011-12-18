@@ -137,14 +137,14 @@ namespace YogUILibrary.Code.UIComponents
                 Color oldColor = input.tdI.color;
                 if (!input.selected && input.input == "" && defaultText != "")
                 {
-                    input.input = defaultText;
+                    input.tdI.text = defaultText;
                     defaulted = true;
                     input.tdI.color = Color.Gray;
                 }
                 input.Draw(sb);
                 if (defaulted)
                 {
-                    input.input = "";
+                    input.tdI.text = "";
                     input.tdI.color = oldColor;
                 }
             }
