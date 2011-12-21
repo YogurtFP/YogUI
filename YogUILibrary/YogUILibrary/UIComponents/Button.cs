@@ -15,7 +15,7 @@ namespace YogUILibrary.Code.UIComponents
         private Action lambdaOnClick = null;
         private Color backColor = Color.Black;
         private Color borderColor = Color.Gray;
-        private Color textColor = Color.Black;
+        private Color textColor = Color.White;
         private byte backAlpha = 200;
         private byte borderAlpha = 255;
         private float width = 5;

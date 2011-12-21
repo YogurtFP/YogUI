@@ -69,7 +69,7 @@ namespace YogUITestBed
 
             //Create a new Text Field with position (top-left) at 0, 10. Width 100, height 20 (don't change this to anything else yet),
             //White text, Black background, White border, SpriteFont font, doing nothing on text enter, and nothing on text changed.
-            textField = new TextField(new Vector2(0, 10), 100, 20, Color.White, Color.Black, Color.White, font, (string s) => { /*Pressed Enter*/ }, (string s) => { /*Text changed*/});
+            textField = new TextField(new Vector2(0, 10), 300, 20, Color.White, Color.Black, Color.White, font, (string s) => { /*Pressed Enter*/ }, (string s) => { /*Text changed*/});
             textField.SetText("TextField");
             textField.setPlaceHolderText("Default text");
 
