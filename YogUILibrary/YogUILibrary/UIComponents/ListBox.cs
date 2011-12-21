@@ -82,9 +82,12 @@ namespace YogUILibrary.Code.UIComponents
                     which = (float)Math.Floor(which);
                     int oldSel = selectedIndex;
                     selectedIndex = (int)(which + vertOffset);
-
-
+                    if (selectedIndex >= dataSource.Count) selectedIndex = -1;
                 }
+            }
+            else
+            {
+                selectedIndex = -1;
             }
         }
 
