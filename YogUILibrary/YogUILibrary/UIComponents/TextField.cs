@@ -87,14 +87,17 @@ namespace YogUILibrary.Code.UIComponents
             InputManager.BindMouse(() =>
                 {
                     input.selected = hovering;
-                    float charLength = input.getCharLength();
-                    float xDist = InputManager.GetMousePos().X - input.BoundBox.Left;
-                    int pos = (int)MathHelper.Clamp(xDist / charLength, 0, input.input.Length - input.offset);
-                    pos += input.offset;
-                    input.cursorPos = pos;
+                    if (hovering)
+                    {
+                        float charLength = input.getCharLength();
+                        float xDist = InputManager.GetMousePos().X - input.BoundBox.Left;
+                        int pos = (int)MathHelper.Clamp(xDist / charLength, 0, input.input.Length - input.offset);
+                        pos += input.offset;
+                        input.cursorPos = pos;
 
-                    contextMenu.Position = InputManager.GetMousePosV() - new Vector2(3);
-                    contextMenu.Show();
+                        contextMenu.Position = InputManager.GetMousePosV() - new Vector2(3);
+                        contextMenu.Show();
+                    }
                 }, MouseButton.Right);
 
         }

@@ -34,7 +34,7 @@ namespace YogUILibrary.Code.UIComponents
                 drop.AddItem(new Structs.DropDownItem(item, () => { updateSelected(); }));
             }
             if (items.Length > 0)
-                selectedIndex = 0;
+                selectedIndex = -1;
 
             base.UIC_Initialize();
         }
