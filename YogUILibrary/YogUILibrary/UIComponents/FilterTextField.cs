@@ -51,7 +51,7 @@ namespace YogUILibrary.UIComponents
                 return;
             }
 
-            String text = getText();
+            String text = GetText();
             curBorderColor = pattern.IsMatch(text) ? successColor : failColor;
             textField.setBorderColor(curBorderColor);
         }
@@ -61,7 +61,13 @@ namespace YogUILibrary.UIComponents
             return curBorderColor == successColor;
         }
 
-        public String getText()
+        public void SetText(String text)
+        {
+            textField.SetText(text);
+            revalidate();
+        }
+
+        public String GetText()
         {
             return textField.GetText();
         }
