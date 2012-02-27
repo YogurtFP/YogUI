@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using YogUILibrary.Code.UIComponents;
+using YogUILibrary.UIComponents;
 
-namespace YogUILibrary.Code.Structs
+namespace YogUILibrary.Structs
 {
     public class RadioButtonGroup
     {

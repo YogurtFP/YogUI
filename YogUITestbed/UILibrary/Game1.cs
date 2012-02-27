@@ -9,8 +9,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using YogUILibrary;
-using YogUILibrary.Code.UIComponents;
-using YogUILibrary.Code.Structs;
+using YogUILibrary.UIComponents;
+using YogUILibrary.Structs;
 namespace YogUITestBed
 {
     /// <summary>
@@ -22,6 +22,7 @@ namespace YogUITestBed
         SpriteBatch spriteBatch;
 
         public TextField textField = null;
+        public FilterTextField filterTextField = null;
         public ListBox listBox = null;
         public ProgressBar progressBar = null;
         public SliderBar sliderBar = null;
@@ -63,15 +64,13 @@ namespace YogUITestBed
             YogUILibrary.YogUI.YogUI_LoadContent(this);
             font = Content.Load<SpriteFont>("Console");
 
-            //Create a 1x1 white texture to be used for drawing boxes/circles/etc.
-            Texture2D white = new Texture2D(GraphicsDevice, 1, 1);
-            white.SetData<Color>(new Color[] { Color.White });
-
             //Create a new Text Field with position (top-left) at 0, 10. Width 100, height 20 (don't change this to anything else yet),
             //White text, Black background, White border, SpriteFont font, doing nothing on text enter, and nothing on text changed.
             textField = new TextField(new Vector2(0, 10), 300, 20, Color.White, Color.Black, Color.White, font, (string s) => { /*Pressed Enter*/ }, (string s) => { /*Text changed*/});
             textField.SetText("TextField");
             textField.setPlaceHolderText("Default text");
+
+            filterTextField = new FilterTextField(new Vector2(330, 10), "^\\d+?\\.\\d+?\\.\\d+?\\.\\d+?$", 150, 20, Color.White, Color.Black, Color.LawnGreen, Color.Red, font, (string s) => { });
 
             //Create a new ListBox at (0, 150), 90 width, 100 height, and doing nothing on Selected Index Changed.
             listBox = new ListBox(new Vector2(0, 150), 90, 100, font, () => { /*Selected Index Changed*/});
@@ -119,6 +118,7 @@ namespace YogUITestBed
             //Update all of our UIComponents.
             YogUI.YogUI_Update(gameTime);
             textField.Update(gameTime);
+            filterTextField.Update(gameTime);
             listBox.Update(gameTime);
             progressBar.Update(gameTime);
             sliderBar.Update(gameTime);
@@ -143,6 +143,7 @@ namespace YogUITestBed
             spriteBatch.Begin();
 
             textField.Draw(spriteBatch);
+            filterTextField.Draw(spriteBatch);
             listBox.Draw(spriteBatch);
             progressBar.Draw(spriteBatch);
             sliderBar.Draw(spriteBatch);

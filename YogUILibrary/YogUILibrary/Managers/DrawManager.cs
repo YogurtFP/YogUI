@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-namespace YogUILibrary.Code.Managers
+namespace YogUILibrary.Managers
 {
     public static class DrawManager
     {

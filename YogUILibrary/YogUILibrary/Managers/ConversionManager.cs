@@ -5,7 +5,7 @@ using System.Text;
 using System.IO;
 using System.Text.RegularExpressions;
 using Microsoft.Xna.Framework;
-namespace YogUILibrary.Code.Managers
+namespace YogUILibrary.Managers
 {
     public static class ConversionManager
     {

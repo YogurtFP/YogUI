@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using YogUILibrary.Code.Structs;
-using YogUILibrary.Code.Managers;
-namespace YogUILibrary.Code.UIComponents
+using YogUILibrary.Structs;
+using YogUILibrary.Managers;
+namespace YogUILibrary.UIComponents
 {
     public class DropDownList : UIComponent
     {

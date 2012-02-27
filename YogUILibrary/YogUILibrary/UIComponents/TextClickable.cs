@@ -5,8 +5,8 @@ using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Graphics;
-using YogUILibrary.Code.Managers;
-namespace YogUILibrary.Code.UIComponents
+using YogUILibrary.Managers;
+namespace YogUILibrary.UIComponents
 {
     public class TextClickable : UIComponent
     {

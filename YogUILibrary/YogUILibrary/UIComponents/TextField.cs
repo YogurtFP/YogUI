@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using YogUILibrary.Code.Managers;
-using YogUILibrary.Code.Structs;
-namespace YogUILibrary.Code.UIComponents
+using YogUILibrary.Managers;
+using YogUILibrary.Structs;
+namespace YogUILibrary.UIComponents
 {
     public class TextField : UIComponent
     {
@@ -223,6 +223,10 @@ namespace YogUILibrary.Code.UIComponents
         {
             active = active;
             input.selected = selected;
+        }
+        public void setBorderColor(Color color)
+        {
+            borderColor = color;
         }
     }
 }

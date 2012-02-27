@@ -2,8 +2,8 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using YogUILibrary.Code.Managers;
-namespace YogUILibrary.Code.UIComponents
+using YogUILibrary.Managers;
+namespace YogUILibrary.UIComponents
 {
     public class TextInput : UIComponent
     {
@@ -98,6 +98,20 @@ namespace YogUILibrary.Code.UIComponents
 
         private void bindKeys()
         {
+            string[] toBindUpper = "B D E F G H I J K L M N O P Q R S T U W Y Z ) ! @ # $ % ^ & * ( ? > < \" : } { _ +".Split(' ');
+            string[] toBindLower = "b d e f g h i j k l m n o p q r s t u w y z 0 1 2 3 4 5 6 7 8 9 / . , ' ; ] [ - =".Split(' ');
+            Keys[] toBind = { Keys.B, Keys.D, Keys.E, Keys.F, Keys.G, Keys.H, Keys.I, Keys.J, Keys.K, Keys.L, Keys.M, Keys.N, Keys.O, Keys.P, Keys.Q, Keys.R, Keys.S, Keys.T, Keys.U, Keys.W, Keys.Y, Keys.Z
+                            , Keys.D0, Keys.D1, Keys.D2, Keys.D3, Keys.D4, Keys.D5, Keys.D6, Keys.D7, Keys.D8, Keys.D9, Keys.OemQuestion, Keys.OemPeriod, Keys.OemComma, Keys.OemQuotes,
+                            Keys.OemSemicolon, Keys.OemCloseBrackets, Keys.OemOpenBrackets, Keys.OemMinus, Keys.OemPlus};
+
+            for (int i = 0; i < toBindUpper.Length; i++)
+            {
+                String upper = toBindUpper[i];
+                String lower = toBindLower[i];
+                Keys bind = toBind[i];
+                InputManager.BindKey(() => { string a = ShiftHeld() ? keyPressed(upper) : keyPressed(lower); }, bind);
+                InputManager.BindKey(() => { keyRepeatHeld = ""; keyRepeatWaitCount = 0; }, bind, false, false);
+            }
 
             InputManager.BindKey(() =>
             {
@@ -119,7 +133,6 @@ namespace YogUILibrary.Code.UIComponents
                     }
                 }
             }, Keys.A);
-            InputManager.BindKey(() => { string a = ShiftHeld() ? keyPressed("B") : keyPressed("b"); }, Keys.B);
             InputManager.BindKey(() =>
             {
                 if (!(active && selected)) return;
@@ -139,24 +152,6 @@ namespace YogUILibrary.Code.UIComponents
                     }
                 }
             }, Keys.C);
-            InputManager.BindKey(() => { string a = ShiftHeld() ? keyPressed("D") : keyPressed("d"); }, Keys.D);
-            InputManager.BindKey(() => { string a = ShiftHeld() ? keyPressed("E") : keyPressed("e"); }, Keys.E);
-            InputManager.BindKey(() => { string a = ShiftHeld() ? keyPressed("F") : keyPressed("f"); }, Keys.F);
-            InputManager.BindKey(() => { string a = ShiftHeld() ? keyPressed("G") : keyPressed("g"); }, Keys.G);
-            InputManager.BindKey(() => { string a = ShiftHeld() ? keyPressed("H") : keyPressed("h"); }, Keys.H);
-            InputManager.BindKey(() => { string a = ShiftHeld() ? keyPressed("I") : keyPressed("i"); }, Keys.I);
-            InputManager.BindKey(() => { string a = ShiftHeld() ? keyPressed("J") : keyPressed("j"); }, Keys.J);
-            InputManager.BindKey(() => { string a = ShiftHeld() ? keyPressed("K") : keyPressed("k"); }, Keys.K);
-            InputManager.BindKey(() => { string a = ShiftHeld() ? keyPressed("L") : keyPressed("l"); }, Keys.L);
-            InputManager.BindKey(() => { string a = ShiftHeld() ? keyPressed("M") : keyPressed("m"); }, Keys.M);
-            InputManager.BindKey(() => { string a = ShiftHeld() ? keyPressed("N") : keyPressed("n"); }, Keys.N);
-            InputManager.BindKey(() => { string a = ShiftHeld() ? keyPressed("O") : keyPressed("o"); }, Keys.O);
-            InputManager.BindKey(() => { string a = ShiftHeld() ? keyPressed("P") : keyPressed("p"); }, Keys.P);
-            InputManager.BindKey(() => { string a = ShiftHeld() ? keyPressed("Q") : keyPressed("q"); }, Keys.Q);
-            InputManager.BindKey(() => { string a = ShiftHeld() ? keyPressed("R") : keyPressed("r"); }, Keys.R);
-            InputManager.BindKey(() => { string a = ShiftHeld() ? keyPressed("S") : keyPressed("s"); }, Keys.S);
-            InputManager.BindKey(() => { string a = ShiftHeld() ? keyPressed("T") : keyPressed("t"); }, Keys.T);
-            InputManager.BindKey(() => { string a = ShiftHeld() ? keyPressed("U") : keyPressed("u"); }, Keys.U);
             InputManager.BindKey(() =>
             {
                 if (!(active && selected)) return;
@@ -176,7 +171,6 @@ namespace YogUILibrary.Code.UIComponents
                     }
                 }
             }, Keys.V);
-            InputManager.BindKey(() => { string a = ShiftHeld() ? keyPressed("W") : keyPressed("w"); }, Keys.W);
             InputManager.BindKey(() =>
             {
                 if (!(active && selected)) return;
@@ -196,28 +190,7 @@ namespace YogUILibrary.Code.UIComponents
                     }
                 }
             }, Keys.X);
-            InputManager.BindKey(() => { string a = ShiftHeld() ? keyPressed("Y") : keyPressed("y"); }, Keys.Y);
-            InputManager.BindKey(() => { string a = ShiftHeld() ? keyPressed("Z") : keyPressed("z"); }, Keys.Z);
-            InputManager.BindKey(() => { string a = ShiftHeld() ? keyPressed(")") : keyPressed("0"); }, Keys.D0);
-            InputManager.BindKey(() => { string a = ShiftHeld() ? keyPressed("!") : keyPressed("1"); }, Keys.D1);
-            InputManager.BindKey(() => { string a = ShiftHeld() ? keyPressed("@") : keyPressed("2"); }, Keys.D2);
-            InputManager.BindKey(() => { string a = ShiftHeld() ? keyPressed("#") : keyPressed("3"); }, Keys.D3);
-            InputManager.BindKey(() => { string a = ShiftHeld() ? keyPressed("$") : keyPressed("4"); }, Keys.D4);
-            InputManager.BindKey(() => { string a = ShiftHeld() ? keyPressed("%") : keyPressed("5"); }, Keys.D5);
-            InputManager.BindKey(() => { string a = ShiftHeld() ? keyPressed("^") : keyPressed("6"); }, Keys.D6);
-            InputManager.BindKey(() => { string a = ShiftHeld() ? keyPressed("&") : keyPressed("7"); }, Keys.D7);
-            InputManager.BindKey(() => { string a = ShiftHeld() ? keyPressed("*") : keyPressed("8"); }, Keys.D8);
-            InputManager.BindKey(() => { string a = ShiftHeld() ? keyPressed("(") : keyPressed("9"); }, Keys.D9);
-            InputManager.BindKey(() => { string a = ShiftHeld() ? keyPressed("?") : keyPressed("/"); }, Keys.OemQuestion);
-            InputManager.BindKey(() => { string a = ShiftHeld() ? keyPressed(">") : keyPressed("."); }, Keys.OemPeriod);
-            InputManager.BindKey(() => { string a = ShiftHeld() ? keyPressed("<") : keyPressed(","); }, Keys.OemComma);
-            InputManager.BindKey(() => { string a = ShiftHeld() ? keyPressed("\"") : keyPressed("'"); }, Keys.OemQuotes);
-            InputManager.BindKey(() => { string a = ShiftHeld() ? keyPressed(":") : keyPressed(";"); }, Keys.OemSemicolon);
-            InputManager.BindKey(() => { string a = ShiftHeld() ? keyPressed("}") : keyPressed("]"); }, Keys.OemCloseBrackets);
-            InputManager.BindKey(() => { string a = ShiftHeld() ? keyPressed("{") : keyPressed("["); }, Keys.OemOpenBrackets);
             InputManager.BindKey(() => { keyPressed(" "); }, Keys.Space);
-            InputManager.BindKey(() => { string a = ShiftHeld() ? keyPressed("_") : keyPressed("-"); }, Keys.OemMinus);
-            InputManager.BindKey(() => { string a = ShiftHeld() ? keyPressed("+") : keyPressed("="); }, Keys.OemPlus);
             InputManager.BindKey(() => { keyPressed("backspace"); }, Keys.Back, true);
             InputManager.BindKey(() => { if (active && selected) { if (lambdaTextEnter != null) lambdaTextEnter(); } }, Keys.Enter);
             InputManager.BindKey(() => { keyPressed("left"); }, Keys.Left, true);
@@ -225,54 +198,13 @@ namespace YogUILibrary.Code.UIComponents
 
 
             InputManager.BindKey(() => { keyRepeatHeld = ""; keyRepeatWaitCount = 0; }, Keys.A, false, false);
-            InputManager.BindKey(() => { keyRepeatHeld = ""; keyRepeatWaitCount = 0; }, Keys.B, false, false);
             InputManager.BindKey(() => { keyRepeatHeld = ""; keyRepeatWaitCount = 0; }, Keys.C, false, false);
-            InputManager.BindKey(() => { keyRepeatHeld = ""; keyRepeatWaitCount = 0; }, Keys.D, false, false);
-            InputManager.BindKey(() => { keyRepeatHeld = ""; keyRepeatWaitCount = 0; }, Keys.E, false, false);
-            InputManager.BindKey(() => { keyRepeatHeld = ""; keyRepeatWaitCount = 0; }, Keys.F, false, false);
-            InputManager.BindKey(() => { keyRepeatHeld = ""; keyRepeatWaitCount = 0; }, Keys.G, false, false);
-            InputManager.BindKey(() => { keyRepeatHeld = ""; keyRepeatWaitCount = 0; }, Keys.H, false, false);
-            InputManager.BindKey(() => { keyRepeatHeld = ""; keyRepeatWaitCount = 0; }, Keys.I, false, false);
-            InputManager.BindKey(() => { keyRepeatHeld = ""; keyRepeatWaitCount = 0; }, Keys.J, false, false);
-            InputManager.BindKey(() => { keyRepeatHeld = ""; keyRepeatWaitCount = 0; }, Keys.K, false, false);
-            InputManager.BindKey(() => { keyRepeatHeld = ""; keyRepeatWaitCount = 0; }, Keys.L, false, false);
-            InputManager.BindKey(() => { keyRepeatHeld = ""; keyRepeatWaitCount = 0; }, Keys.M, false, false);
-            InputManager.BindKey(() => { keyRepeatHeld = ""; keyRepeatWaitCount = 0; }, Keys.N, false, false);
-            InputManager.BindKey(() => { keyRepeatHeld = ""; keyRepeatWaitCount = 0; }, Keys.O, false, false);
-            InputManager.BindKey(() => { keyRepeatHeld = ""; keyRepeatWaitCount = 0; }, Keys.P, false, false);
-            InputManager.BindKey(() => { keyRepeatHeld = ""; keyRepeatWaitCount = 0; }, Keys.Q, false, false);
-            InputManager.BindKey(() => { keyRepeatHeld = ""; keyRepeatWaitCount = 0; }, Keys.R, false, false);
-            InputManager.BindKey(() => { keyRepeatHeld = ""; keyRepeatWaitCount = 0; }, Keys.S, false, false);
-            InputManager.BindKey(() => { keyRepeatHeld = ""; keyRepeatWaitCount = 0; }, Keys.T, false, false);
-            InputManager.BindKey(() => { keyRepeatHeld = ""; keyRepeatWaitCount = 0; }, Keys.U, false, false);
             InputManager.BindKey(() => { keyRepeatHeld = ""; keyRepeatWaitCount = 0; }, Keys.V, false, false);
-            InputManager.BindKey(() => { keyRepeatHeld = ""; keyRepeatWaitCount = 0; }, Keys.W, false, false);
             InputManager.BindKey(() => { keyRepeatHeld = ""; keyRepeatWaitCount = 0; }, Keys.X, false, false);
-            InputManager.BindKey(() => { keyRepeatHeld = ""; keyRepeatWaitCount = 0; }, Keys.Y, false, false);
-            InputManager.BindKey(() => { keyRepeatHeld = ""; keyRepeatWaitCount = 0; }, Keys.Z, false, false);
-            InputManager.BindKey(() => { keyRepeatHeld = ""; keyRepeatWaitCount = 0; }, Keys.D0, false, false);
-            InputManager.BindKey(() => { keyRepeatHeld = ""; keyRepeatWaitCount = 0; }, Keys.D1, false, false);
-            InputManager.BindKey(() => { keyRepeatHeld = ""; keyRepeatWaitCount = 0; }, Keys.D2, false, false);
-            InputManager.BindKey(() => { keyRepeatHeld = ""; keyRepeatWaitCount = 0; }, Keys.D3, false, false);
-            InputManager.BindKey(() => { keyRepeatHeld = ""; keyRepeatWaitCount = 0; }, Keys.D4, false, false);
-            InputManager.BindKey(() => { keyRepeatHeld = ""; keyRepeatWaitCount = 0; }, Keys.D5, false, false);
-            InputManager.BindKey(() => { keyRepeatHeld = ""; keyRepeatWaitCount = 0; }, Keys.D6, false, false);
-            InputManager.BindKey(() => { keyRepeatHeld = ""; keyRepeatWaitCount = 0; }, Keys.D7, false, false);
-            InputManager.BindKey(() => { keyRepeatHeld = ""; keyRepeatWaitCount = 0; }, Keys.D8, false, false);
-            InputManager.BindKey(() => { keyRepeatHeld = ""; keyRepeatWaitCount = 0; }, Keys.D9, false, false);
-            InputManager.BindKey(() => { keyRepeatHeld = ""; keyRepeatWaitCount = 0; }, Keys.OemQuestion, false, false);
-            InputManager.BindKey(() => { keyRepeatHeld = ""; keyRepeatWaitCount = 0; }, Keys.OemPeriod, false, false);
-            InputManager.BindKey(() => { keyRepeatHeld = ""; keyRepeatWaitCount = 0; }, Keys.OemComma, false, false);
-            InputManager.BindKey(() => { keyRepeatHeld = ""; keyRepeatWaitCount = 0; }, Keys.OemQuotes, false, false);
-            InputManager.BindKey(() => { keyRepeatHeld = ""; keyRepeatWaitCount = 0; }, Keys.OemSemicolon, false, false);
-            InputManager.BindKey(() => { keyRepeatHeld = ""; keyRepeatWaitCount = 0; }, Keys.OemCloseBrackets, false, false);
-            InputManager.BindKey(() => { keyRepeatHeld = ""; keyRepeatWaitCount = 0; }, Keys.OemOpenBrackets, false, false);
             InputManager.BindKey(() => { keyRepeatHeld = ""; keyRepeatWaitCount = 0; }, Keys.Space, false, false);
-            InputManager.BindKey(() => { keyRepeatHeld = ""; keyRepeatWaitCount = 0; }, Keys.OemMinus, false, false);
-            InputManager.BindKey(() => { keyRepeatHeld = ""; keyRepeatWaitCount = 0; }, Keys.OemPlus, false, false);
             InputManager.BindKey(() => { keyRepeatHeld = ""; keyRepeatWaitCount = 0; }, Keys.Back, false, false);
             InputManager.BindKey(() => { keyRepeatHeld = ""; keyRepeatWaitCount = 0; }, Keys.Left, false, false);
-            InputManager.BindKey(() => { keyRepeatHeld = ""; keyRepeatWaitCount = 0; keyRepeatWaitCount = 0; }, Keys.Right, false, false);
+            InputManager.BindKey(() => { keyRepeatHeld = ""; keyRepeatWaitCount = 0; }, Keys.Right, false, false);
         }
         private string keyPressed(string key)
         {

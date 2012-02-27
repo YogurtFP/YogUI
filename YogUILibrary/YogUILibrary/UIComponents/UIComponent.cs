@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
-using YogUILibrary.Code.Managers;
+using YogUILibrary.Managers;
 using System.Diagnostics;
-using YogUILibrary.Code.Managers;
-namespace YogUILibrary.Code.UIComponents
+using YogUILibrary.Managers;
+namespace YogUILibrary.UIComponents
 {
     public class UIComponent
     {
@@ -16,9 +16,6 @@ namespace YogUILibrary.Code.UIComponents
         public Action onMouseOff = null;
         public Action onMouseClick = null;
         public Action onMouseDrag = null;
-
-        private int hoverTimer = 0;
-        private int hoverTooltip = 60;
         private string toolText = "";
 
         public Vector2 Position = Vector2.Zero;
@@ -66,7 +63,6 @@ namespace YogUILibrary.Code.UIComponents
                     if (!BoundBox.Contains(p) && mouseOver && active)
                     {
                         OnMouseOff();
-                        hoverTimer = 0;
                         mouseOver = false;
                     }
                 }, MouseButton.Movement);

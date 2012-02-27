@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using YogUILibrary.Code.Managers;
+using YogUILibrary.Managers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-namespace YogUILibrary.Code.UIComponents
+namespace YogUILibrary.UIComponents
 {
     public class HorizontalScrollBar : UIComponent
     {

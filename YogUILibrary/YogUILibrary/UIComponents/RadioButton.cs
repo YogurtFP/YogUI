@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
-using YogUILibrary.Code.Managers;
-using YogUILibrary.Code.Structs;
+using YogUILibrary.Managers;
+using YogUILibrary.Structs;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace YogUILibrary.Code.UIComponents
+namespace YogUILibrary.UIComponents
 {
     public class RadioButton : UIComponent
     {

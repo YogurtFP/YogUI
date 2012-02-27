@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-using YogUILibrary.Code.Structs;
-namespace YogUILibrary.Code.Managers
+using YogUILibrary.Structs;
+namespace YogUILibrary.Managers
 {
     public class InputManager
     {
@@ -102,7 +102,7 @@ namespace YogUILibrary.Code.Managers
                         }
                     }
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                 }
 
@@ -125,7 +125,7 @@ namespace YogUILibrary.Code.Managers
                         }
                     }
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
 
                 }

@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using YogUILibrary.Code.Managers;
-using YogUILibrary.Code.Structs;
+using YogUILibrary.Managers;
+using YogUILibrary.Structs;
 
-namespace YogUILibrary.Code.UIComponents
+namespace YogUILibrary.UIComponents
 {
     public class ListBox : UIComponent
     {
