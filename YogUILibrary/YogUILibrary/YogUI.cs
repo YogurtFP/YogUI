@@ -19,6 +19,8 @@ namespace YogUILibrary
         public static Effect circleShader;
         public static InputManager inputManager;
         public static Game theGame;
+        public static NinePatch btn_hover = new NinePatch();
+        public static NinePatch btn_normal = new NinePatch();
         
         public static void YogUI_LoadContent(Game game)
         {
@@ -26,6 +28,7 @@ namespace YogUILibrary
             white = new Texture2D(game.GraphicsDevice, 1, 1);
             white.SetData<Color>(new Color[] { Color.White });
             circleShader = content.Load<Effect>("CircleShader");
+         //   testPatch = content.Load<Texture2D>("testpatch_9");
             inputManager = new InputManager();
             theGame = game;
         }

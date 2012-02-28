@@ -12,16 +12,29 @@ namespace YogUILibrary.UIComponents
     {
         private TextField textField;
 
-        private Color successColor = Color.Green;
-        private Color failColor = Color.Red;
+        public Color successColor = Color.Green;
+        public Color failColor = Color.Red;
 
         private Color curBorderColor = Color.Black;
 
         private Regex pattern = new Regex(".*?");
 
+
+        public string stringPattern
+        {
+            get
+            {
+                return pattern.ToString();
+            }
+            set
+            {
+                pattern = new Regex(value);
+            }
+        }
+
         public FilterTextField(Vector2 position, string pattern, float width, float height, Color textColor, Color backColor, Color successColor, Color failColor, SpriteFont font, Action<string> onTextEnter, Action<string> onTextChanged = null)
         {
-            this.pattern = new Regex(pattern);
+            stringPattern = pattern;
             this.successColor = successColor;
             this.failColor = failColor;
             textField = new TextField(position, width, height, textColor, backColor, failColor, font, onTextEnter, (string text) =>
@@ -70,30 +83,6 @@ namespace YogUILibrary.UIComponents
         public String GetText()
         {
             return textField.GetText();
-        }
-
-        public Color getSuccessColor()
-        {
-            return successColor;
-        }
-        public Color getFailColor()
-        {
-            return failColor;
-        }
-
-
-        public void setPattern(string pattern)
-        {
-            this.pattern = new Regex(pattern);
-        }
-
-        public void setSuccessColor(Color success)
-        {
-            successColor = success;
-        }
-        public void setFailColor(Color fail)
-        {
-            failColor = fail;
         }
     }
 }

@@ -19,8 +19,8 @@ namespace YogUILibrary.Managers
 
         public static TimeSpan FloatToTime(float minutes)
         {
-            float seconds = minutes * 60;
-            return TimeSpan.FromSeconds((double)seconds);
+            double seconds = minutes * 60;
+            return TimeSpan.FromSeconds(seconds);
         }
 
         public static double DegreeToRadians(double degree)
