@@ -388,13 +388,14 @@ namespace YogUILibrary.UIComponents
                 DrawManager.Draw_Box(new Vector2(selection.X, tdI.BoundBox.Top + 2), new Vector2(selection.Y, tdI.BoundBox.Bottom - 4), Color.Blue * .5f, sb, 0f, 25);
             }
 
+            tdI.Position = Position;
             if (active)
                 tdI.Draw(sb);
             int cursorDiff = cursorPos - offset;
             float xToDrawDelim = cursorDiff * length;
             xToDrawDelim -= 2;
             if (mainDelim != null)
-                sb.DrawString(tdI.font, mainDelim, tdI.Position + new Vector2(xToDrawDelim, 0), Color.White);
+                sb.DrawString(tdI.font, mainDelim, tdI.Position + new Vector2(xToDrawDelim, 0), tdI.color);
             //base.Draw();
         }
 

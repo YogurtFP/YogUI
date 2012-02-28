@@ -11,33 +11,38 @@ namespace YogUILibrary.UIComponents
     public class TextField : UIComponent
     {
         TextInput input;
-        Color textColor = Color.White, borderColor = Color.White, backgroundColor = Color.Black;
-        Vector2 topLeft, bottomRight;
+        Color textColor = Color.White;
         Action<string> onTextEnter, onTextChanged;
         string oldInput = "";
         private bool dragging = false, hovering = false;
-        private float width, height;
-        private string placeHolderText = "";
+        public float width, height;
+        public string placeHolderText = "";
         DropDownList contextMenu;
+
+        public NinePatch patchNormal;
+        public NinePatch patchSelected;
 
         public override Rectangle BoundBox
         {
             get
             {
-                return new Rectangle((int)(topLeft.X), (int)(topLeft.Y), (int)(bottomRight.X - topLeft.X), (int)(bottomRight.Y - topLeft.Y));
+                NinePatch patch = input.selected ? patchSelected : patchNormal;
+                return new Rectangle((int)(Position.X),
+                    (int)(Position.Y),
+                    (int)(patch.rightWidth + width),
+                    (int)(patch.bottomHeight + height + patch.topHeight));
             }
         }
 
-        public TextField(Vector2 position, float width, float height, Color textColor, Color backColor, Color borderColor, SpriteFont font, Action<string> onTextEnter, Action<string> onTextChanged = null)
+        public TextField(Vector2 position, float width, float height, Color textColor, SpriteFont font, Action<string> onTextEnter, Action<string> onTextChanged = null)
         {
-            this.topLeft = position;
-            this.bottomRight = new Vector2(topLeft.X + width, topLeft.Y + height);
+            patchSelected = YogUI.textField_selected;
+            patchNormal = YogUI.textField_normal;
+            this.Position = position;
             this.width = width;
             this.height = height;
-            input = new TextInput(new Vector2(topLeft.X + 2, topLeft.Y), font, textColor, () => { TextEnter(); }, "", () => { TextChanged(); });
+            input = new TextInput(new Vector2(position.X + 2, position.Y), font, textColor, () => { TextEnter(); }, "", () => { TextChanged(); });
             this.textColor = textColor;
-            this.backgroundColor = backColor;
-            this.borderColor = borderColor;
             this.onTextEnter = onTextEnter;
             this.onTextChanged = onTextChanged;
             contextMenu = new DropDownList(Vector2.Zero, font);
@@ -116,19 +121,6 @@ namespace YogUILibrary.UIComponents
             return (int)(width / length);
         }
 
-        public void SetPosition(Vector2 pos)
-        {
-            this.topLeft = pos;
-            this.bottomRight = new Vector2(topLeft.X + width, topLeft.Y + height);
-            input.SetPosition(new Vector2(topLeft.X + 2, topLeft.Y));
-        }
-
-        public void SetWidth(float width2)
-        {
-            this.width = width2;
-            this.bottomRight = new Vector2(topLeft.X + width, topLeft.Y + height);
-        }
-
         public override void Update(GameTime time)
         {
             if (active)
@@ -154,8 +146,6 @@ namespace YogUILibrary.UIComponents
         {
             if (active)
             {
-                DrawManager.Draw_Box(topLeft, bottomRight, backgroundColor, sb, 0f, backgroundColor.A);
-                DrawManager.Draw_Outline(topLeft, bottomRight, borderColor, sb, borderColor.A);
                 bool defaulted = false;
                 Color oldColor = input.tdI.color;
                 if (!input.selected && input.input == "" && placeHolderText != "")
@@ -164,6 +154,13 @@ namespace YogUILibrary.UIComponents
                     defaulted = true;
                     input.tdI.color = Color.Gray;
                 }
+                /* YogUILibrary.Managers.DrawManager.Draw_Circle(ConversionManager.PToV(BoundBox.Center), 5, Color.Red, Color.Red, sb);
+                 YogUILibrary.Managers.DrawManager.Draw_Box(new Vector2(BoundBox.Left, BoundBox.Top), new Vector2(BoundBox.Right, BoundBox.Bottom), Color.Red, sb);
+                 YogUILibrary.Managers.DrawManager.Draw_Circle(Position, 3, Color.Green, Color.Red, sb);*/
+
+                NinePatch patch = input.selected ? patchSelected : patchNormal;
+                patch.Draw(sb, Position, (int)width, (int)height);
+                input.Position = Position + new Vector2(patch.leftWidth, patch.topHeight);
                 input.Draw(sb);
                 if (defaulted)
                 {
@@ -223,10 +220,6 @@ namespace YogUILibrary.UIComponents
         {
             active = active;
             input.selected = selected;
-        }
-        public void setBorderColor(Color color)
-        {
-            borderColor = color;
         }
     }
 }

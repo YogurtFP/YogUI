@@ -6,19 +6,18 @@ using YogUILibrary.Managers;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using System.Text.RegularExpressions;
+using YogUILibrary.Structs;
 namespace YogUILibrary.UIComponents
 {
     public class FilterTextField : UIComponent
     {
         private TextField textField;
 
-        public Color successColor = Color.Green;
-        public Color failColor = Color.Red;
-
-        private Color curBorderColor = Color.Black;
-
         private Regex pattern = new Regex(".*?");
 
+        public NinePatch patchNormal;
+        public NinePatch patchSelectedRight;
+        public NinePatch patchSelectedWrong;
 
         public string stringPattern
         {
@@ -32,12 +31,13 @@ namespace YogUILibrary.UIComponents
             }
         }
 
-        public FilterTextField(Vector2 position, string pattern, float width, float height, Color textColor, Color backColor, Color successColor, Color failColor, SpriteFont font, Action<string> onTextEnter, Action<string> onTextChanged = null)
+        public FilterTextField(Vector2 position, string pattern, float width, float height, Color textColor, SpriteFont font, Action<string> onTextEnter, Action<string> onTextChanged = null)
         {
+            patchNormal = YogUI.textField_normal;
+            patchSelectedRight = YogUI.textField_selected_right;
+            patchSelectedWrong = YogUI.textField_selected_wrong;
             stringPattern = pattern;
-            this.successColor = successColor;
-            this.failColor = failColor;
-            textField = new TextField(position, width, height, textColor, backColor, failColor, font, onTextEnter, (string text) =>
+            textField = new TextField(position, width, height, textColor, font, onTextEnter, (string text) =>
             {
                 if (onTextChanged != null) onTextChanged(text);
                 revalidate();
@@ -46,12 +46,12 @@ namespace YogUILibrary.UIComponents
             revalidate();
         }
 
-        public void Update(GameTime theTime)
+        public override void Update(GameTime theTime)
         {
             textField.Update(theTime);
         }
 
-        public void Draw(SpriteBatch sb)
+        public override void Draw(SpriteBatch sb)
         {
             textField.Draw(sb);
         }
@@ -59,19 +59,20 @@ namespace YogUILibrary.UIComponents
         private void revalidate()
         {
             if (pattern == null)
-            {
-                curBorderColor = successColor;
                 return;
-            }
 
             String text = GetText();
-            curBorderColor = pattern.IsMatch(text) ? successColor : failColor;
-            textField.setBorderColor(curBorderColor);
+            if (isValid())
+            {
+                textField.patchSelected = patchSelectedRight;
+            }
+            else
+                textField.patchSelected = patchSelectedWrong;
         }
 
         public bool isValid()
         {
-            return curBorderColor == successColor;
+            return pattern.IsMatch(textField.GetText());
         }
 
         public void SetText(String text)

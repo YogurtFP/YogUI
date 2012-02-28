@@ -60,9 +60,51 @@ namespace YogUILibrary {
             }
         }
         
+        internal static byte[] btn_default_focused_holo_9 {
+            get {
+                object obj = ResourceManager.GetObject("btn_default_focused_holo_9", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] btn_default_normal_holo_9 {
+            get {
+                object obj = ResourceManager.GetObject("btn_default_normal_holo_9", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
         internal static byte[] CircleShader {
             get {
                 object obj = ResourceManager.GetObject("CircleShader", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] textfield_default_9 {
+            get {
+                object obj = ResourceManager.GetObject("textfield_default_9", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] textfield_selected_9 {
+            get {
+                object obj = ResourceManager.GetObject("textfield_selected_9", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] textfield_selected_right_9 {
+            get {
+                object obj = ResourceManager.GetObject("textfield_selected_right_9", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        internal static byte[] textfield_selected_wrong_9 {
+            get {
+                object obj = ResourceManager.GetObject("textfield_selected_wrong_9", resourceCulture);
                 return ((byte[])(obj));
             }
         }

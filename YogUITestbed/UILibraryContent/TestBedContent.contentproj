@@ -49,13 +49,25 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="btn_default_focused_holo.9.png">
-      <Name>btn_default_focused_holo.9</Name>
+    <Compile Include="textfield_default.9.png">
+      <Name>textfield_default.9</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="btn_default_normal_holo.9.png">
-      <Name>btn_default_normal_holo.9</Name>
+    <Compile Include="textfield_selected.9.png">
+      <Name>textfield_selected.9</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="textfield_selected_right.9.png">
+      <Name>textfield_selected_right.9</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+    <Compile Include="textfield_selected_wrong.9.png">
+      <Name>textfield_selected_wrong.9</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

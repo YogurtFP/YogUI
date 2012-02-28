@@ -133,7 +133,13 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\btn_default_focused_holo.9.xnb" />
+    <None Include="Resources\btn_default_normal_holo.9.xnb" />
     <None Include="Resources\CircleShader.xnb" />
+    <None Include="Resources\textfield_default.9.xnb" />
+    <None Include="Resources\textfield_selected.9.xnb" />
+    <None Include="Resources\textfield_selected_right.9.xnb" />
+    <None Include="Resources\textfield_selected_wrong.9.xnb" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />

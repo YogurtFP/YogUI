@@ -19,8 +19,14 @@ namespace YogUILibrary
         public static Effect circleShader;
         public static InputManager inputManager;
         public static Game theGame;
+
         public static NinePatch btn_hover = new NinePatch();
         public static NinePatch btn_normal = new NinePatch();
+
+        public static NinePatch textField_normal = new NinePatch();
+        public static NinePatch textField_selected = new NinePatch();
+        public static NinePatch textField_selected_wrong = new NinePatch();
+        public static NinePatch textField_selected_right = new NinePatch();
         
         public static void YogUI_LoadContent(Game game)
         {
@@ -28,7 +34,14 @@ namespace YogUILibrary
             white = new Texture2D(game.GraphicsDevice, 1, 1);
             white.SetData<Color>(new Color[] { Color.White });
             circleShader = content.Load<Effect>("CircleShader");
-         //   testPatch = content.Load<Texture2D>("testpatch_9");
+            btn_hover.LoadFromTexture(content.Load<Texture2D>("btn_default_focused_holo_9"));
+            btn_normal.LoadFromTexture(content.Load<Texture2D>("btn_default_normal_holo_9"));
+
+            textField_normal.LoadFromTexture(content.Load<Texture2D>("textfield_default_9"));
+            textField_selected.LoadFromTexture(content.Load<Texture2D>("textfield_selected_9"));
+            textField_selected_right.LoadFromTexture(content.Load<Texture2D>("textfield_selected_right_9"));
+            textField_selected_wrong.LoadFromTexture(content.Load<Texture2D>("textfield_selected_wrong_9"));
+
             inputManager = new InputManager();
             theGame = game;
         }

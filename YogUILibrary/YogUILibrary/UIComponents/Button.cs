@@ -16,17 +16,20 @@ namespace YogUILibrary.UIComponents
         private Action lambdaOnClick = null;
         private Color textColor = Color.Black;
 
-        public bool testing = false;
+        public NinePatch patchNormal = YogUI.btn_normal;
+        public NinePatch patchHover = YogUI.btn_hover;
+        public NinePatch patchClick = YogUI.btn_hover;
 
         public override Rectangle BoundBox
         {
             get
             {
+                NinePatch patch = base.mouseOver ? patchHover : patchNormal;
                 return new Rectangle(
-                    td.BoundBox.Left - 5,
-                    td.BoundBox.Top - 10,
-                    td.BoundBox.Width + 10,
-                    td.BoundBox.Height + 10);
+                    td.BoundBox.Left - (patch.leftWidth / 2),
+                    td.BoundBox.Top - patch.topHeight,
+                    td.BoundBox.Width + patch.rightWidth,
+                    td.BoundBox.Height + patch.bottomHeight);
             }
         }
 
@@ -36,22 +39,18 @@ namespace YogUILibrary.UIComponents
             base.UIC_Initialize();
             this.lambdaOnClick = lambdaOnClick;
             td = new TextDrawer(font, text, Position, textColor, TextAlign.Center);
+            patchNormal = YogUI.btn_normal;
+            patchHover = YogUI.btn_hover;
+            patchClick = YogUI.btn_hover;
         }
 
         public override void Draw(SpriteBatch sb)
         {
-            if (testing)
-            {
-
-            }
-            else
-            {
-                NinePatch patch = base.mouseOver ? YogUI.btn_hover : YogUI.btn_normal;
-                Vector2 center = ConversionManager.PToV(BoundBox.Center);
-                patch.Draw(sb, center - patch.getCenter(td.BoundBox.Width, td.BoundBox.Height), td.BoundBox.Width, td.BoundBox.Height);
-                td.Draw(sb);
-                //base.Draw();
-            }
+            NinePatch patch = base.mouseOver ? patchHover : patchNormal;
+            Vector2 center = ConversionManager.PToV(BoundBox.Center);
+            patch.Draw(sb, center - patch.getCenter(td.BoundBox.Width, td.BoundBox.Height), td.BoundBox.Width, td.BoundBox.Height);
+            td.Draw(sb);
+            //base.Draw();
         }
 
         public override void OnMouseClick()

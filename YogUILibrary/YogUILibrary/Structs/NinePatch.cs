@@ -15,6 +15,39 @@ namespace YogUILibrary.Structs
         public int topMostPatch;
         public int bottomMostPatch;
 
+        public int leftWidth
+        {
+            get
+            {
+                return leftMostPatch - 1;
+            }
+        }
+        public int rightWidth
+        {
+            get
+            {
+                if (texture != null)
+                    return texture.Width - (rightMostPatch + 1);
+                return 0;
+            }
+        }
+        public int topHeight
+        {
+            get
+            {
+                return topMostPatch - 1;
+            }
+        }
+        public int bottomHeight
+        {
+            get
+            {
+                if (texture != null)
+                    return texture.Height - (bottomMostPatch + 1);
+                return 0;
+            }
+        }
+
         private Texture2D texture;
 
         public NinePatch()
@@ -77,8 +110,8 @@ namespace YogUILibrary.Structs
             int leftMiddleHeight = Left.Height;
             float scaleMiddleByHorizontally = ((float)contentWidth / (float)topMiddleWidth);
             float scaleMiddleByVertically = ((float)contentHeight / (float)leftMiddleHeight);
-            if (scaleMiddleByVertically < 1) scaleMiddleByVertically = 1;
-            if (scaleMiddleByHorizontally < 1) scaleMiddleByHorizontally = 1;
+           // if (scaleMiddleByVertically < 1) scaleMiddleByVertically = 1;
+           // if (scaleMiddleByHorizontally < 1) scaleMiddleByHorizontally = 1;
 
             Vector2 drawTL = position;
             Vector2 drawT = drawTL + new Vector2(topLeft.Width, 0);
@@ -124,38 +157,6 @@ namespace YogUILibrary.Structs
             Vector2 drawMMiddle = new Vector2(topLeft.Width, topLeft.Height);
             drawMMiddle += new Vector2(topMiddleWidth * (scaleMiddleByHorizontally / 2), leftMiddleHeight * (scaleMiddleByVertically / 2));
             return drawMMiddle;
-        }
-
-        public Rectangle getBounds(int contentWidth, int contentHeight)
-        {
-            Rectangle topLeft = new Rectangle(1, 1, leftMostPatch - 1, topMostPatch - 1);
-            Rectangle topMiddle = new Rectangle(leftMostPatch, 1, (rightMostPatch - leftMostPatch), topMostPatch - 1);
-            Rectangle topRight = new Rectangle(rightMostPatch + 1, 1, (texture.Width - 1) - rightMostPatch, topMostPatch - 1);
-
-            Rectangle Left = new Rectangle(1, topMostPatch, leftMostPatch - 1, (bottomMostPatch - topMostPatch));
-            Rectangle Middle = new Rectangle(leftMostPatch, topMostPatch, (rightMostPatch - leftMostPatch), (bottomMostPatch - topMostPatch));
-            Rectangle Right = new Rectangle(rightMostPatch + 1, topMostPatch, (texture.Width - 1) - rightMostPatch, (bottomMostPatch - topMostPatch));
-
-            Rectangle bottomLeft = new Rectangle(1, bottomMostPatch, leftMostPatch - 1, (texture.Height - 1) - bottomMostPatch);
-            Rectangle bottomMiddle = new Rectangle(leftMostPatch, bottomMostPatch, (rightMostPatch - leftMostPatch), (texture.Height - 1) - bottomMostPatch);
-            Rectangle bottomRight = new Rectangle(rightMostPatch + 1, bottomMostPatch, (texture.Width - 1) - rightMostPatch, (texture.Height - 1) - bottomMostPatch);
-
-            int topMiddleWidth = topMiddle.Width;
-            int leftMiddleHeight = Left.Height;
-            float scaleMiddleByHorizontally = ((float)contentWidth / (float)topMiddleWidth);
-            float scaleMiddleByVertically = ((float)contentHeight / (float)leftMiddleHeight);
-            if (scaleMiddleByVertically < 1) scaleMiddleByVertically = 1;
-            if (scaleMiddleByHorizontally < 1) scaleMiddleByHorizontally = 1;
-
-            Vector2 tL = Vector2.Zero;
-            Vector2 bR = new Vector2();
-            bR.X += topLeft.Width;
-            bR.X += topMiddleWidth * scaleMiddleByHorizontally;
-            bR.X += topRight.Width;
-            bR.Y += topLeft.Height;
-            bR.Y += leftMiddleHeight * scaleMiddleByVertically;
-            bR.Y += bottomLeft.Height;
-            return new Rectangle(topLeft.Left, topLeft.Top, (int)(bR.X - tL.X), (int)(bR.Y - tL.Y));
         }
     }
 }

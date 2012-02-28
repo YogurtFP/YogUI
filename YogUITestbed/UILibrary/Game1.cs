@@ -66,11 +66,11 @@ namespace YogUITestBed
 
             //Create a new Text Field with position (top-left) at 0, 10. Width 100, height 20 (don't change this to anything else yet),
             //White text, Black background, White border, SpriteFont font, doing nothing on text enter, and nothing on text changed.
-            textField = new TextField(new Vector2(0, 10), 300, 20, Color.White, Color.Black, Color.White, font, (string s) => { /*Pressed Enter*/ }, (string s) => { /*Text changed*/});
+            textField = new TextField(new Vector2(0, 10), 200, 20, Color.Black, font, (string s) => { /*Pressed Enter*/ }, (string s) => { /*Text changed*/});
             textField.SetText("TextField");
             textField.setPlaceHolderText("Default text");
 
-            filterTextField = new FilterTextField(new Vector2(330, 10), "^\\d+?\\.\\d+?\\.\\d+?\\.\\d+?$", 150, 20, Color.White, Color.Black, Color.LawnGreen, Color.Red, font, (string s) => { });
+            filterTextField = new FilterTextField(new Vector2(330, 10), "^\\d+?\\.\\d+?\\.\\d+?\\.\\d+?$", 150, 20, Color.Black, font, (string s) => { });
 
             //Create a new ListBox at (0, 150), 90 width, 100 height, and doing nothing on Selected Index Changed.
             listBox = new ListBox(new Vector2(0, 150), 90, 100, font, () => { /*Selected Index Changed*/});
@@ -98,11 +98,6 @@ namespace YogUITestBed
 
             //Create a new button at (500, 100), with the text "Button", Adding a new item to the listbox when it is clicked, the text being from the TextField.
             button = new Button(new Vector2(500, 100), "Button", font, () => { listBox.dataSource.Add(textField.GetText()); });
-
-            YogUI.btn_hover = new NinePatch();
-            YogUI.btn_normal = new NinePatch();
-            YogUI.btn_hover.LoadFromTexture(Content.Load<Texture2D>("btn_default_focused_holo.9"));
-            YogUI.btn_normal.LoadFromTexture(Content.Load<Texture2D>("btn_default_normal_holo.9"));
         }
 
         /// <summary>
@@ -133,8 +128,6 @@ namespace YogUITestBed
             comboBox.Update(gameTime);
             button.Update(gameTime);
             button.SetText(textField.GetText());
-
-
             base.Update(gameTime);
         }
 
@@ -144,7 +137,7 @@ namespace YogUITestBed
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.SaddleBrown);
             //Draw all of our UIComponents.
             spriteBatch.Begin();
 

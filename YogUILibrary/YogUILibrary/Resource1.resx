@@ -118,7 +118,25 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="btn_default_focused_holo_9" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\btn_default_focused_holo.9.xnb;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="btn_default_normal_holo_9" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\btn_default_normal_holo.9.xnb;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="CircleShader" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\CircleShader.xnb;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="textfield_default_9" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\textfield_default.9.xnb;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="textfield_selected_9" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\textfield_selected.9.xnb;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="textfield_selected_right_9" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\textfield_selected_right.9.xnb;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="textfield_selected_wrong_9" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\textfield_selected_wrong.9.xnb;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>
