@@ -106,9 +106,6 @@
     <Reference Include="System.Net">
       <Private>False</Private>
     </Reference>
-    <Reference Include="YogUILibrary">
-      <HintPath>..\..\YogUILibrary\YogUILibrary\bin\x86\Release\YogUILibrary.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -147,6 +144,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\YogUILibrary\YogUILibrary\YogUILibrary.csproj">
+      <Project>{278A824D-60AF-440D-96C3-E0E125527EE5}</Project>
+      <Name>YogUILibrary</Name>
+    </ProjectReference>
     <ProjectReference Include="..\UILibraryContent\TestBedContent.contentproj">
       <Project>{520A4C77-A5F9-4A41-B868-4C0AC9340A9C}</Project>
       <Name>TestBedContent %28Content%29</Name>
