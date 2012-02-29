@@ -20,16 +20,19 @@ namespace YogUILibrary.UIComponents
         public NinePatch patchHover = YogUI.btn_hover;
         public NinePatch patchClick = YogUI.btn_hover;
 
+        private int paddingWidth = 0;
+        private int paddingHeight = 0;
+
         public override Rectangle BoundBox
         {
             get
             {
                 NinePatch patch = base.mouseOver ? patchHover : patchNormal;
                 return new Rectangle(
-                    td.BoundBox.Left - (patch.leftWidth / 2),
-                    td.BoundBox.Top - patch.topHeight,
-                    td.BoundBox.Width + patch.rightWidth,
-                    td.BoundBox.Height + patch.bottomHeight);
+                   (td.BoundBox.Left - (patch.leftWidth / 2)) - (paddingWidth / 2),
+                    (td.BoundBox.Top - patch.topHeight) - (paddingHeight / 2),
+                    td.BoundBox.Width + patch.rightWidth + (paddingWidth / 2),
+                    td.BoundBox.Height + patch.bottomHeight + (paddingHeight / 2));
             }
         }
 
@@ -48,7 +51,7 @@ namespace YogUILibrary.UIComponents
         {
             NinePatch patch = base.mouseOver ? patchHover : patchNormal;
             Vector2 center = ConversionManager.PToV(BoundBox.Center);
-            patch.Draw(sb, center - patch.getCenter(td.BoundBox.Width, td.BoundBox.Height), td.BoundBox.Width, td.BoundBox.Height);
+            patch.Draw(sb, center - patch.getCenter(td.BoundBox.Width, td.BoundBox.Height), td.BoundBox.Width + paddingWidth, td.BoundBox.Height + paddingHeight);
             td.Draw(sb);
             //base.Draw();
         }

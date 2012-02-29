@@ -98,6 +98,8 @@ namespace YogUITestBed
 
             //Create a new button at (500, 100), with the text "Button", Adding a new item to the listbox when it is clicked, the text being from the TextField.
             button = new Button(new Vector2(500, 100), "Button", font, () => { listBox.dataSource.Add(textField.GetText()); });
+            //   button.paddingHeight = 10;
+            // button.paddingWidth = 200;
         }
 
         /// <summary>
@@ -151,7 +153,7 @@ namespace YogUITestBed
             checkBox.Draw(spriteBatch);
             comboBox.Draw(spriteBatch);
             button.Draw(spriteBatch);
-           // spriteBatch.Draw(testLol, YogUILibrary.Managers.InputManager.GetMousePosV() - new Vector2(20, 20), Color.White);
+            // spriteBatch.Draw(testLol, YogUILibrary.Managers.InputManager.GetMousePosV() - new Vector2(20, 20), Color.White);
 
             spriteBatch.End();
             base.Draw(gameTime);
