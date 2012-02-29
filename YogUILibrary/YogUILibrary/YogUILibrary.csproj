@@ -111,7 +111,6 @@
     <Compile Include="UIComponents\CheckBox.cs" />
     <Compile Include="UIComponents\ComboBox.cs" />
     <Compile Include="UIComponents\DropDownList.cs" />
-    <Compile Include="UIComponents\FilterTextField.cs" />
     <Compile Include="UIComponents\HorizontalScrollBar.cs" />
     <Compile Include="UIComponents\ListBox.cs" />
     <Compile Include="UIComponents\ProgressBar.cs" />

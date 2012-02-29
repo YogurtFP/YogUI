@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using YogUILibrary.Managers;
 using YogUILibrary.Structs;
+using System.Text.RegularExpressions;
 namespace YogUILibrary.UIComponents
 {
     public class TextField : UIComponent
@@ -13,14 +14,49 @@ namespace YogUILibrary.UIComponents
         TextInput input;
         Color textColor = Color.White;
         Action<string> onTextEnter, onTextChanged;
-        string oldInput = "";
         private bool dragging = false, hovering = false;
         public float width, height;
-        public string placeHolderText = "";
+
+        private string _placeHolderText = "";
+        public string placeHolderText
+        {
+            get
+            {
+                return _placeHolderText;
+            }
+            set
+            {
+                if (value.Length > numCharsAllowed())
+                    _placeHolderText = value.Remove(numCharsAllowed());
+                else
+                    _placeHolderText = value;
+            }
+        }
+        
         DropDownList contextMenu;
 
         public NinePatch patchNormal;
         public NinePatch patchSelected;
+        public NinePatch patchSelectedRight;
+        public NinePatch patchSelectedWrong;
+
+        private Regex pattern = null;
+
+
+        public bool textValid = true;
+
+        public string stringPattern
+        {
+            get
+            {
+                return pattern.ToString();
+            }
+            set
+            {
+                pattern = new Regex(value);
+                revalidate();
+            }
+        }
 
         public override Rectangle BoundBox
         {
@@ -37,6 +73,8 @@ namespace YogUILibrary.UIComponents
         public TextField(Vector2 position, float width, float height, Color textColor, SpriteFont font, Action<string> onTextEnter, Action<string> onTextChanged = null)
         {
             patchSelected = YogUI.textField_selected;
+            patchSelectedRight = YogUI.textField_selected_right;
+            patchSelectedWrong = YogUI.textField_selected_wrong;
             patchNormal = YogUI.textField_normal;
             this.Position = position;
             this.width = width;
@@ -107,18 +145,40 @@ namespace YogUILibrary.UIComponents
 
         }
 
-        public void setPlaceHolderText(string text)
-        {
-            if (text.Length > numCharsAllowed())
-                placeHolderText = text.Remove(numCharsAllowed());
-            else
-                placeHolderText = text;
-        }
-
-        public int numCharsAllowed()
+        private int numCharsAllowed()
         {
             float length = input.tdI.font.MeasureString(" ").X;
             return (int)(width / length);
+        }
+
+        private bool textExtends()
+        {
+            return input.tdI.font.MeasureString(getOffsetString() + "|").X >= width;
+        }
+
+        private string getOffsetString()
+        {
+            string ret = "";
+            for (int i = input.offset; i < input.input.Length; i++)
+            {
+                ret += input.input[i];
+            }
+            return ret;
+        }
+
+        private void revalidate()
+        {
+            if (pattern == null)
+            {
+                textValid = true;
+                return;
+            }
+            textValid = pattern.IsMatch(input.input);
+        }
+
+        private bool isFilterText()
+        {
+            return pattern != null;
         }
 
         public override void Update(GameTime time)
@@ -138,7 +198,6 @@ namespace YogUILibrary.UIComponents
                 input.Update(time);
                 contextMenu.Update(time);
             }
-            oldInput = input.input;
             base.Update(time);
         }
 
@@ -154,11 +213,19 @@ namespace YogUILibrary.UIComponents
                     defaulted = true;
                     input.tdI.color = Color.Gray;
                 }
-                /* YogUILibrary.Managers.DrawManager.Draw_Circle(ConversionManager.PToV(BoundBox.Center), 5, Color.Red, Color.Red, sb);
-                 YogUILibrary.Managers.DrawManager.Draw_Box(new Vector2(BoundBox.Left, BoundBox.Top), new Vector2(BoundBox.Right, BoundBox.Bottom), Color.Red, sb);
-                 YogUILibrary.Managers.DrawManager.Draw_Circle(Position, 3, Color.Green, Color.Red, sb);*/
 
-                NinePatch patch = input.selected ? patchSelected : patchNormal;
+                NinePatch patch = patchNormal;
+                if (input.selected)
+                {
+                    if (isFilterText())
+                    {
+                        patch = textValid ? patchSelectedRight : patchSelectedWrong;
+                    }
+                    else
+                    {
+                        patch = patchSelected;
+                    }
+                }
                 patch.Draw(sb, Position, (int)width, (int)height);
                 input.Position = Position + new Vector2(patch.leftWidth, patch.topHeight);
                 input.Draw(sb);
@@ -170,33 +237,20 @@ namespace YogUILibrary.UIComponents
 
                 contextMenu.Draw(sb);
             }
-
             base.Draw(sb);
         }
 
         private void TextEnter()
         {
+            revalidate();
             onTextEnter(GetText());
         }
+     
         private void TextChanged()
         {
+            revalidate();
             if (onTextChanged != null)
                 onTextChanged(GetText());
-        }
-
-        private bool textExtends()
-        {
-            return input.tdI.font.MeasureString(getOffsetString() + "|").X >= width;
-        }
-
-        private string getOffsetString()
-        {
-            string ret = "";
-            for (int i = input.offset; i < input.input.Length; i++)
-            {
-                ret += input.input[i];
-            }
-            return ret;
         }
 
         public void SetText(string text)
@@ -216,6 +270,7 @@ namespace YogUILibrary.UIComponents
             this.active = active;
             input.SetActive(active);
         }
+        
         public void SetSelected(bool selected)
         {
             active = active;

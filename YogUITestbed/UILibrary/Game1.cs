@@ -22,7 +22,7 @@ namespace YogUITestBed
         SpriteBatch spriteBatch;
 
         public TextField textField = null;
-        public FilterTextField filterTextField = null;
+        public TextField filterTextField = null;
         public ListBox listBox = null;
         public ProgressBar progressBar = null;
         public SliderBar sliderBar = null;
@@ -68,10 +68,10 @@ namespace YogUITestBed
             //White text, Black background, White border, SpriteFont font, doing nothing on text enter, and nothing on text changed.
             textField = new TextField(new Vector2(0, 10), 200, 20, Color.Black, font, (string s) => { /*Pressed Enter*/ }, (string s) => { /*Text changed*/});
             textField.SetText("TextField");
-            textField.setPlaceHolderText("Default text");
+            textField.placeHolderText = "Default text";
 
-            filterTextField = new FilterTextField(new Vector2(330, 10), "^\\d+?\\.\\d+?\\.\\d+?\\.\\d+?$", 150, 20, Color.Black, font, (string s) => { });
-
+            filterTextField = new TextField(new Vector2(330, 10), 150, 20, Color.Black, font, (string s) => { });
+            filterTextField.stringPattern = "^\\d+?\\.\\d+?\\.\\d+?\\.\\d+?$";
             //Create a new ListBox at (0, 150), 90 width, 100 height, and doing nothing on Selected Index Changed.
             listBox = new ListBox(new Vector2(0, 150), 90, 100, font, () => { /*Selected Index Changed*/});
             listBox.dataSource = new string[] { "Index 1", "Index 2", "Index 3" }.ToList<string>();
