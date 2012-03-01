@@ -12,7 +12,6 @@ namespace YogUILibrary.UIComponents
     {
 
         private TextDrawer td;
-        private Vector2 position;
         private Action lambdaOnClick = null;
         private Color textColor = Color.Black;
 
@@ -21,7 +20,7 @@ namespace YogUILibrary.UIComponents
         public NinePatch patchClick = YogUI.btn_hover;
 
         private int paddingWidth = 0;
-        private int paddingHeight = 0;
+        public int paddingHeight = 0;
 
         public override Rectangle BoundBox
         {
@@ -38,7 +37,7 @@ namespace YogUILibrary.UIComponents
 
         public Button(Vector2 Position, string text, SpriteFont font, Action lambdaOnClick = null)
         {
-            position = Position;
+            this.Position = Position;
             base.UIC_Initialize();
             this.lambdaOnClick = lambdaOnClick;
             td = new TextDrawer(font, text, Position, textColor, TextAlign.Center);
@@ -49,10 +48,13 @@ namespace YogUILibrary.UIComponents
 
         public override void Draw(SpriteBatch sb)
         {
+            td.Position = Position;
+            if (!active) return;
             NinePatch patch = base.mouseOver ? patchHover : patchNormal;
             Vector2 center = ConversionManager.PToV(BoundBox.Center);
-            patch.Draw(sb, center - patch.getCenter(td.BoundBox.Width, td.BoundBox.Height), td.BoundBox.Width + paddingWidth, td.BoundBox.Height + paddingHeight);
+            patch.Draw(sb, center - patch.getCenter(td.BoundBox.Width + paddingWidth, td.BoundBox.Height), td.BoundBox.Width + paddingWidth, td.BoundBox.Height + paddingHeight);
             td.Draw(sb);
+            //YogUILibrary.Managers.DrawManager.Draw_Circle(Position, 5f, Color.Red, Color.Black, sb);
             //base.Draw();
         }
 
@@ -68,7 +70,6 @@ namespace YogUILibrary.UIComponents
 
         public override void OnMouseOver()
         {
-
             base.OnMouseOver();
         }
 

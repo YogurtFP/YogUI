@@ -81,6 +81,13 @@ namespace YogUILibrary {
             }
         }
         
+        internal static byte[] ninepatchtest {
+            get {
+                object obj = ResourceManager.GetObject("ninepatchtest", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
         internal static byte[] textfield_default_9 {
             get {
                 object obj = ResourceManager.GetObject("textfield_default_9", resourceCulture);

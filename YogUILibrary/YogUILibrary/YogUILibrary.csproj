@@ -113,6 +113,7 @@
     <Compile Include="UIComponents\DropDownList.cs" />
     <Compile Include="UIComponents\HorizontalScrollBar.cs" />
     <Compile Include="UIComponents\ListBox.cs" />
+    <Compile Include="UIComponents\NumericUpDown.cs" />
     <Compile Include="UIComponents\ProgressBar.cs" />
     <Compile Include="UIComponents\RadioButton.cs" />
     <Compile Include="UIComponents\SliderBar.cs" />
@@ -135,6 +136,7 @@
     <None Include="Resources\btn_default_focused_holo.9.xnb" />
     <None Include="Resources\btn_default_normal_holo.9.xnb" />
     <None Include="Resources\CircleShader.xnb" />
+    <None Include="Resources\ninepatchtest.xnb" />
     <None Include="Resources\textfield_default.9.xnb" />
     <None Include="Resources\textfield_selected.9.xnb" />
     <None Include="Resources\textfield_selected_right.9.xnb" />

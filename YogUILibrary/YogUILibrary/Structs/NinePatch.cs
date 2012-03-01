@@ -48,7 +48,7 @@ namespace YogUILibrary.Structs
             }
         }
 
-        private Texture2D texture;
+        public Texture2D texture;
 
         public NinePatch()
         {
@@ -57,6 +57,68 @@ namespace YogUILibrary.Structs
             topMostPatch = -1;
             bottomMostPatch = -1;
             texture = null;
+        }
+
+        public bool isAlreadyNinepatch(Texture2D texture)
+        {
+            Microsoft.Xna.Framework.Color[] data = new Microsoft.Xna.Framework.Color[texture.Width * texture.Height];
+            texture.GetData(data);
+
+            for (int i = 0; i < texture.Width; i++)
+            {
+                Color curPixel = data[i];
+                int a = curPixel.A;
+                int r = curPixel.R;
+                int g = curPixel.G;
+                int b = curPixel.B;
+
+                if (a != 0 && (r != 0 || g != 0 || b != 0))
+                {
+                    //Is not black and is not transparent.
+                    return false;
+                }
+            }
+            for (int i = data.Length - (texture.Width + 1); i < data.Length; i++)
+            {
+                Color curPixel = data[i];
+                int a = curPixel.A;
+                int r = curPixel.R;
+                int g = curPixel.G;
+                int b = curPixel.B;
+                if (a != 0 && (r != 0 || g != 0 || b != 0))
+                {
+                    //Is not black and is not transparent.
+                    return false;
+                }
+            }
+            for (int i = 0; i < data.Length; i += texture.Width)
+            {
+                Color curPixel = data[i];
+                int a = curPixel.A;
+                int r = curPixel.R;
+                int g = curPixel.G;
+                int b = curPixel.B;
+                if (a != 0 && (r != 0 || g != 0 || b != 0))
+                {
+                    //Is not black and is not transparent.
+                    return false;
+                }
+            }
+            for (int i = texture.Width - 1; i < data.Length; i += texture.Width)
+            {
+                Color curPixel = data[i];
+                int a = curPixel.A;
+                int r = curPixel.R;
+                int g = curPixel.G;
+                int b = curPixel.B;
+                if (a != 0 && (r != 0 || g != 0 || b != 0))
+                {
+                    //Is not black and is not transparent.
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         public void LoadFromTexture(Texture2D texture)

@@ -29,6 +29,8 @@ namespace YogUILibrary.UIComponents
         private string keyRepeatHeld = "";
         private bool keyRepeatRapid = false;
 
+        public bool scaleToText = false;
+
         public int selectionStart = -1;
         public int selectionEnd = -1;
 
@@ -53,6 +55,7 @@ namespace YogUILibrary.UIComponents
             get
             {
                 if (offset >= input.Length) offset = input.Length;
+                if (numCharsAllowed == -1) return input;
                 if (offset < 0) offset = 0;
                 string input2 = "";
                 for (int i = offset; i < offset + numCharsAllowed && i < input.Length; i++) { input2 += input[i]; }
@@ -367,7 +370,7 @@ namespace YogUILibrary.UIComponents
         {
             if (cursorPos < 0) cursorPos = 0;
             if (cursorPos > input.Length) cursorPos = input.Length;
-            if (cursorPos - offset > numCharsAllowed) offset += ((cursorPos - offset) - numCharsAllowed);
+            if (cursorPos - offset > numCharsAllowed && numCharsAllowed != -1) offset += ((cursorPos - offset) - numCharsAllowed);
             if (cursorPos - offset < 0) offset--;
 
             float length = getCharLength();
@@ -377,7 +380,7 @@ namespace YogUILibrary.UIComponents
             {
                 selection.X -= offset;
                 selection.Y -= offset;
-                if (selection.Y > numCharsAllowed) selection.Y = numCharsAllowed;
+                if (selection.Y > numCharsAllowed && numCharsAllowed != -1) selection.Y = numCharsAllowed;
                 if (selection.X < 0) selection.X = 0;
                 selection.X *= length;
                 selection.Y *= length;

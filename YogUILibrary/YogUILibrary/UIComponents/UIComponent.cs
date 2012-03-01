@@ -16,6 +16,7 @@ namespace YogUILibrary.UIComponents
         public Action onMouseOff = null;
         public Action onMouseClick = null;
         public Action onMouseDrag = null;
+        public Action onMouseClickConstant = null;
         private string toolText = "";
 
         public Vector2 Position = Vector2.Zero;
@@ -27,7 +28,7 @@ namespace YogUILibrary.UIComponents
                 return new Rectangle();
             }
         }
-        
+
 
         public void UIC_Initialize(bool bind = true)
         {
@@ -39,6 +40,13 @@ namespace YogUILibrary.UIComponents
                     if (BoundBox.Contains(p) && active)
                         OnMouseClick();
                 }, MouseButton.Left);
+
+                InputManager.BindMouse(() =>
+                {
+                    Point p = InputManager.GetMousePos();
+                    if (BoundBox.Contains(p) && active)
+                        OnMouseClickConstant();
+                }, MouseButton.Left, true, true);
 
                 InputManager.BindMouse(() =>
                 {
@@ -67,6 +75,12 @@ namespace YogUILibrary.UIComponents
                     }
                 }, MouseButton.Movement);
             }
+        }
+
+        public virtual void OnMouseClickConstant()
+        {
+            if (onMouseClickConstant != null && active)
+                onMouseClickConstant();
         }
 
         public virtual void OnMouseClick()

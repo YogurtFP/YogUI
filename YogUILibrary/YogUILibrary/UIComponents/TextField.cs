@@ -44,6 +44,17 @@ namespace YogUILibrary.UIComponents
 
 
         public bool textValid = true;
+        public bool scaleToText
+        {
+            get
+            {
+                return input.numCharsAllowed == -1;
+            }
+            set
+            {
+                input.numCharsAllowed = value ? -1 : numCharsAllowed();
+            }
+        }
 
         public string stringPattern
         {
@@ -194,7 +205,7 @@ namespace YogUILibrary.UIComponents
                 {
                     hovering = false;
                 }
-
+                
                 input.Update(time);
                 contextMenu.Update(time);
             }
@@ -226,7 +237,10 @@ namespace YogUILibrary.UIComponents
                         patch = patchSelected;
                     }
                 }
-                patch.Draw(sb, Position, (int)width, (int)height);
+
+                int patchWidth = scaleToText && input.BoundBox.Width >= (int)width ? input.BoundBox.Width : (int)width;
+
+                patch.Draw(sb, Position, (int)patchWidth, (int)height);
                 input.Position = Position + new Vector2(patch.leftWidth, patch.topHeight);
                 input.Draw(sb);
                 if (defaulted)
