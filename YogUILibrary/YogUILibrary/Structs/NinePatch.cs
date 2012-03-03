@@ -123,6 +123,10 @@ namespace YogUILibrary.Structs
 
         public void LoadFromTexture(Texture2D texture)
         {
+            leftMostPatch = -1;
+            rightMostPatch = -1;
+            topMostPatch = -1;
+            bottomMostPatch = -1;
             this.texture = texture;
             Microsoft.Xna.Framework.Color[] data = new Microsoft.Xna.Framework.Color[texture.Width * texture.Height];
             texture.GetData(data);

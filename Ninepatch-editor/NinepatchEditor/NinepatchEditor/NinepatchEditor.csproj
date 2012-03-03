@@ -117,7 +117,7 @@
     <Content Include="GameThumbnail.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\YogUI\YogUILibrary\YogUILibrary\YogUILibrary.csproj">
+    <ProjectReference Include="..\..\..\YogUILibrary\YogUILibrary\YogUILibrary.csproj">
       <Project>{278A824D-60AF-440D-96C3-E0E125527EE5}</Project>
       <Name>YogUILibrary</Name>
     </ProjectReference>

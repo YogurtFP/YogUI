@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+# Visual Studio 2010 Express for Windows Phone
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YogUILibrary", "YogUILibrary\YogUILibrary.csproj", "{278A824D-60AF-440D-96C3-E0E125527EE5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestBed", "..\YogUITestbed\UILibrary\TestBed.csproj", "{A2251A7C-E6F1-4A59-A806-B1827B7DCD81}"
@@ -10,9 +10,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestBed", "..\YogUITestbed\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestBedContent", "..\YogUITestbed\UILibraryContent\TestBedContent.contentproj", "{520A4C77-A5F9-4A41-B868-4C0AC9340A9C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NinepatchEditor", "..\..\Ninepatch-editor\NinepatchEditor\NinepatchEditor\NinepatchEditor.csproj", "{8D2D7A23-E08C-4B36-9742-899F0F3EF44A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NinepatchEditor", "..\Ninepatch-editor\NinepatchEditor\NinepatchEditor\NinepatchEditor.csproj", "{8D2D7A23-E08C-4B36-9742-899F0F3EF44A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NinepatchEditorContent", "..\..\Ninepatch-editor\NinepatchEditor\NinepatchEditorContent\NinepatchEditorContent.contentproj", "{960B6B68-DF21-4F4F-99A3-E345DC654D0D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NinepatchEditorContent", "..\Ninepatch-editor\NinepatchEditor\NinepatchEditorContent\NinepatchEditorContent.contentproj", "{960B6B68-DF21-4F4F-99A3-E345DC654D0D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

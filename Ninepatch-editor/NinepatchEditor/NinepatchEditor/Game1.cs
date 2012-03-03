@@ -19,9 +19,7 @@ namespace NinepatchEditor
 {
     /// <summary>
     /// This is the main type for your game
-    /// </summary>
-    /// 
-
+    /// </summary
     public class Game1 : Microsoft.Xna.Framework.Game
     {
         GraphicsDeviceManager graphics;
@@ -59,7 +57,7 @@ namespace NinepatchEditor
             this.IsMouseVisible = true;
             Window.Title = "YoGUI Ninepatch editor";
             graphics.PreferMultiSampling = true;
-            
+
         }
 
         /// <summary>
@@ -88,21 +86,21 @@ namespace NinepatchEditor
             SpriteFont buttonFont = Content.Load<SpriteFont>("buttonFont");
 
             loadNinepatch = new Button(new Vector2(46, 23), "Open", buttonFont, loadExisting);
-            saveNinepatchAs = new Button(new Vector2(150, 23), "Save", buttonFont);
+            saveNinepatchAs = new Button(new Vector2(150, 23), "Save", buttonFont, saveImage);
 
-            xStart = new TextField(new Vector2(225, 3), 70, 15, Color.Black, buttonFont, (string s) => { });
-            xEnd = new TextField(new Vector2(225, 28), 70, 15, Color.Black, buttonFont, (string s) => { });
+            xStart = new TextField(new Vector2(225, 3), 70, 15, Color.Black, buttonFont, (string s) => { refresh(); }, (string s) => { refresh(); });
+            xEnd = new TextField(new Vector2(225, 28), 70, 15, Color.Black, buttonFont, (string s) => { refresh(); }, (string s) => { refresh(); });
             xStart.stringPattern = xEnd.stringPattern = "^\\d+?$";
             xStart.placeHolderText = "X start";
             xEnd.placeHolderText = "X end";
 
-            yStart = new TextField(new Vector2(305, 3), 70, 15, Color.Black, buttonFont, (string s) => { });
-            yEnd = new TextField(new Vector2(305, 28), 70, 15, Color.Black, buttonFont, (string s) => { });
+            yStart = new TextField(new Vector2(305, 3), 70, 15, Color.Black, buttonFont, (string s) => { refresh(); }, (string s) => { refresh(); });
+            yEnd = new TextField(new Vector2(305, 28), 70, 15, Color.Black, buttonFont, (string s) => { refresh(); }, (string s) => { refresh(); });
             yStart.stringPattern = yEnd.stringPattern = "^\\d+?$";
             yStart.placeHolderText = "Y start";
             yEnd.placeHolderText = "Y end";
 
-            refreshNinepatch = new Button(new Vector2(420, 23), "Refresh", buttonFont);
+            refreshNinepatch = new Button(new Vector2(420, 23), "Refresh", buttonFont, refresh);
 
             patchScale = new SliderBar(new Vector2(465, 9), 225, 30, 0, 100, buttonFont);
 
@@ -117,6 +115,16 @@ namespace NinepatchEditor
             scaleX.selected = true;
 
             // TODO: use this.Content to load your game content here
+        }
+
+        public void refresh()
+        {
+            Texture2D wat = createImageNinepatch();
+            curNinepatch.LoadFromTexture(wat);
+            using (FileStream fs = new FileStream(@"C:\users\josh\desktop\wat.png", FileMode.Create))
+            {
+                wat.SaveAsPng(fs, wat.Width, wat.Height);
+            }
         }
 
         /// <summary>
@@ -149,7 +157,6 @@ namespace NinepatchEditor
             scaleX.Update(gameTime);
             scaleY.Update(gameTime);
             scaleXY.Update(gameTime);
-            computeScale();
 
             base.Update(gameTime);
         }
@@ -210,7 +217,7 @@ namespace NinepatchEditor
             curTexture = ret;
             curNinepatch.LoadFromTexture(texture);
             xStart.SetText(curNinepatch.leftMostPatch.ToString());
-            xEnd.SetText(curNinepatch.rightWidth.ToString());
+            xEnd.SetText(curNinepatch.rightMostPatch.ToString());
             yStart.SetText(curNinepatch.topMostPatch.ToString());
             yEnd.SetText(curNinepatch.bottomMostPatch.ToString());
         }
@@ -222,8 +229,8 @@ namespace NinepatchEditor
             xEnd.SetText("3");
             yStart.SetText("1");
             yEnd.SetText("3");
-            curTexture = createImageNinepatch();
-            curNinepatch.LoadFromTexture(curTexture);
+            curTexture = texture;
+            curNinepatch.LoadFromTexture(createImageNinepatch());
         }
 
         public void computeScale()
@@ -258,6 +265,26 @@ namespace NinepatchEditor
                 //set it to the lower of the two.
                 patchScale.max = (availableH < availableW) ? availableH : availableW;
             }
+        }
+
+        public void saveImage()
+        {
+            if (curNinepatch.texture == null) return;
+            var save = new System.Windows.Forms.SaveFileDialog();
+            save.SupportMultiDottedExtensions = true;
+            save.DefaultExt = ".9.png";
+            save.Filter = "Ninepatch files|*.9.png|All files|*";
+            save.ShowDialog();
+            String fileName = save.FileName;
+            Texture2D toSave = createImageNinepatch();
+            try
+            {
+                using (FileStream fs = new FileStream(fileName, FileMode.Create))
+                {
+                    toSave.SaveAsPng(fs, toSave.Width, toSave.Height);
+                }
+            }
+            catch (Exception) { }
         }
 
         public Texture2D createImageNinepatch()
@@ -353,11 +380,13 @@ namespace NinepatchEditor
 
             if (curNinepatch.texture != null)
             {
+                computeScale();
                 int height = curNinepatch.bottomMostPatch - curNinepatch.topMostPatch;
                 int width = curNinepatch.rightMostPatch - curNinepatch.leftMostPatch;
                 if (scaleX.selected)
                 {
                     curNinepatch.Draw(spriteBatch, drawPos - curNinepatch.getCenter(width + patchScale.getNumber() + 5, height), width + (patchScale.getNumber() - 5), height);
+                    
                 }
                 else if (scaleY.selected)
                 {
