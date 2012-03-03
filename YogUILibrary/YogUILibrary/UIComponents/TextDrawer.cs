@@ -59,7 +59,7 @@ namespace YogUILibrary.UIComponents
                 {
                     case TextAlign.Center:
                         Vector2 size = font.MeasureString(text);
-                        return new Vector2(size.X / 2, size.Y / 2);
+                        return new Vector2((int)(size.X / 2), (int)(size.Y / 2));
                     case TextAlign.Left:
                         return Vector2.Zero;
                     case TextAlign.Right:

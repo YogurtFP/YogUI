@@ -59,7 +59,7 @@ namespace YogUILibrary.Structs
             texture = null;
         }
 
-        public bool isAlreadyNinepatch(Texture2D texture)
+        public static bool isAlreadyNinepatch(Texture2D texture)
         {
             Microsoft.Xna.Framework.Color[] data = new Microsoft.Xna.Framework.Color[texture.Width * texture.Height];
             texture.GetData(data);

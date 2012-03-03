@@ -305,7 +305,8 @@ namespace YogUILibrary.UIComponents
         private void backSpace()
         {
             Vector2 selection = getFixedSelection();
-            int placeToRemove = cursorPos - 1;
+            if (selection.Y == -1) selection.Y = cursorPos;
+            int placeToRemove = (int)selection.Y - 1;
             int amountToRemove = 1;
             if (selection.X >= 0 && selection.Y >= 0 && selection.X != selection.Y)
             {
@@ -314,7 +315,7 @@ namespace YogUILibrary.UIComponents
             }
             if (amountToRemove + placeToRemove > input.Length || placeToRemove < 0) return;
             input = (input.Length > 0) ? input.Remove(placeToRemove, amountToRemove) : "";
-            cursorPos -= amountToRemove;
+            cursorPos = (int)selection.Y - amountToRemove;
         }
 
         public override void Update(GameTime time)

@@ -11,13 +11,9 @@ namespace YogUILibrary.UIComponents
     {
         ProgressBar progressBar;
         TextDrawer progressText;
-        float width;
-        float height;
-        int min;
-        int num;
-        int max;
-        bool selected = false;
-        bool selectedOutside = false;
+        float width, height;
+        public int min, max, num;
+        bool selected = false, selectedOutside = false;
         public SliderBar(Vector2 position, float width, float height, int min, int max, SpriteFont font, float progress = 0.0f)
         {
             this.width = width;
@@ -25,8 +21,9 @@ namespace YogUILibrary.UIComponents
             this.min = min;
             this.max = max;
             progressBar = new ProgressBar(position, width, height, progress);
-            Vector2 center = new Vector2(position.X + (width / 2), position.Y + (height / 2));
+            Vector2 center = new Vector2((int)(position.X + (width / 2)), (int)(position.Y + (height / 2)));
             progressText = new TextDrawer(font, "", center, Color.White, TextAlign.Center);
+            
             InputManager.BindMouse(() => {
                 Point mousePoint = InputManager.GetMousePos();
                 Vector2 mouseVector = new Vector2(mousePoint.X, mousePoint.Y);

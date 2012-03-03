@@ -33,7 +33,6 @@ namespace YogUITestBed
         public ComboBox comboBox = null;
         public Button button = null;
         public SpriteFont font = null;
-        public NumericUpDown numericUpDown = null;
 
         public Game1()
         {
@@ -98,9 +97,6 @@ namespace YogUITestBed
             //Create a new ComboBox at (500, 200), SpriteFont font.
             comboBox = new ComboBox(new Vector2(500, 200), font, "Combo box option 1", "Combo box option 2", "Combo box option 3");
 
-            //Create a NumericUpDown at (500, 300)
-            numericUpDown = new NumericUpDown(new Vector2(500, 300), font, font);
-
             //Create a new button at (500, 100), with the text "Button", Adding a new item to the listbox when it is clicked, the text being from the TextField.
             button = new Button(new Vector2(500, 100), "Button", font, () => { listBox.dataSource.Add(textField.GetText()); });
             //   button.paddingHeight = 10;
@@ -134,7 +130,6 @@ namespace YogUITestBed
             checkBox.Update(gameTime);
             comboBox.Update(gameTime);
             button.Update(gameTime);
-            numericUpDown.Update(gameTime);
             button.SetText(textField.GetText());
             base.Update(gameTime);
         }
@@ -159,7 +154,6 @@ namespace YogUITestBed
             checkBox.Draw(spriteBatch);
             comboBox.Draw(spriteBatch);
             button.Draw(spriteBatch);
-            numericUpDown.Draw(spriteBatch);
             // spriteBatch.Draw(testLol, YogUILibrary.Managers.InputManager.GetMousePosV() - new Vector2(20, 20), Color.White);
 
             spriteBatch.End();

@@ -42,8 +42,8 @@ namespace YogUILibrary
             textField_selected_right.LoadFromTexture(content.Load<Texture2D>("textfield_selected_right_9"));
             textField_selected_wrong.LoadFromTexture(content.Load<Texture2D>("textfield_selected_wrong_9"));
 
-            Texture2D test = content.Load<Texture2D>("ninepatchtest");
-            bool isPatch = textField_normal.isAlreadyNinepatch(textField_normal.texture);
+            //Texture2D test = content.Load<Texture2D>("ninepatchtest");
+           // bool isPatch = textField_normal.isAlreadyNinepatch(textField_normal.texture);
 
             inputManager = new InputManager();
             theGame = game;

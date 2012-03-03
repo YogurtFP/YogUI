@@ -38,7 +38,7 @@ namespace YogUILibrary.UIComponents
         public RadioButton(Vector2 position, SpriteFont font, string text = "RadioButton")
         {
             labelText = text;
-            label = new TextDrawer(font, labelText, position + new Vector2(radius + 5,  -radius * 1.9f), Color.White);
+            label = new TextDrawer(font, labelText, position + new Vector2(radius + 5,  -radius * 2), Color.White);
             Position = position;
             base.UIC_Initialize();
         }

@@ -272,6 +272,7 @@ namespace YogUILibrary.UIComponents
             string oldtext = input.input;
             input.input = text;
             input.cursorPos = text.Length;
+            revalidate();
         }
 
         public string GetText()
