@@ -35,7 +35,6 @@ namespace YogUILibrary.UIComponents
         public int selectionEnd = -1;
 
         public int offset = 0;
-        public int numCharsAllowed = 0;
 
         public override Rectangle BoundBox
         {
@@ -55,13 +54,21 @@ namespace YogUILibrary.UIComponents
             get
             {
                 if (offset >= input.Length) offset = input.Length;
-                if (numCharsAllowed == -1) return input;
+                if (allowedWidth == 0) return input;
                 if (offset < 0) offset = 0;
                 string input2 = "";
-                for (int i = offset; i < offset + numCharsAllowed && i < input.Length; i++) { input2 += input[i]; }
+                for (int i = offset; i < input.Length; i++)
+                {
+                    string test = input2 + input[i];
+                    float width = tdI.font.MeasureString(test).X;
+                    if (width > allowedWidth) return input2;
+                    input2 += input[i];
+                }
                 return input2;
             }
         }
+
+        public float allowedWidth = 0;
 
         public string selectedText
         {
@@ -222,7 +229,7 @@ namespace YogUILibrary.UIComponents
             {
                 lowerLimit = (int)selection.X;
                 upperLimit = (int)selection.Y;
-                removeCursorPos = (int)(selection.Y - selection.X);
+                removeCursorPos = (int)(selection.Y - selection.X) + 1;
             }
             for (int i = 0; i < lowerLimit; i++)
             {
@@ -354,10 +361,10 @@ namespace YogUILibrary.UIComponents
             //base.OnMouseOver();
         }
 
-        public float getCharLength()
-        {
-            return tdI.font.MeasureString(" ").X;
-        }
+        //public float getCharLength()
+        // {
+        //     return tdI.font.MeasureString(" ").X;
+        // }
 
         public Vector2 getFixedSelection()
         {
@@ -370,36 +377,66 @@ namespace YogUILibrary.UIComponents
         public override void Draw(SpriteBatch sb)
         {
             if (cursorPos < 0) cursorPos = 0;
-            if (cursorPos > input.Length) cursorPos = input.Length;
-            if (cursorPos - offset > numCharsAllowed && numCharsAllowed != -1) offset += ((cursorPos - offset) - numCharsAllowed);
-            if (cursorPos - offset < 0) offset--;
-
-            float length = getCharLength();
+            if (cursorPos > input.Length)
+                cursorPos = input.Length;
+            string measureT = "";
+            for (int i = offset; i < cursorPos && i < input.Length; i++)
+            {
+                measureT += input[i];
+                float width = tdI.font.MeasureString(measureT).X;
+                if (width > allowedWidth)
+                {
+                    offset++;
+                }
+            }
+            if (cursorPos - offset < 0)
+                offset = cursorPos;
+            if (offsetText.Length == 0 && input.Length != 0)
+            {
+                offset--;
+            }
 
             Vector2 selection = getFixedSelection();
             if (selection.X != -1 && selection.Y != -1 && (selection.X != selection.Y))
             {
                 selection.X -= offset;
                 selection.Y -= offset;
-                if (selection.Y > numCharsAllowed && numCharsAllowed != -1) selection.Y = numCharsAllowed;
+                //if (selection.Y > numCharsAllowed && numCharsAllowed != -1) selection.Y = numCharsAllowed;
                 if (selection.X < 0) selection.X = 0;
-                selection.X *= length;
-                selection.Y *= length;
-                selection.X -= 2;
-                selection.Y += 2;
+                string offsetT = offsetText;
+                string before = "";
+                string inside = "";
+                for (int i = 0; i < selection.X; i++)
+                {
+                    before += offsetT[i];
+                }
+                for (int i = (int)selection.X; i < selection.Y && i < offsetT.Length; i++)
+                {
+                    inside += offsetT[i];
+                }
+                selection.X = tdI.font.MeasureString(before).X;
+                selection.Y = tdI.font.MeasureString(before + inside).X;
                 selection.X += tdI.BoundBox.Left;
                 selection.Y += tdI.BoundBox.Left;
+                selection.X -= 2;
                 DrawManager.Draw_Box(new Vector2(selection.X, tdI.BoundBox.Top + 2), new Vector2(selection.Y, tdI.BoundBox.Bottom - 4), Color.Blue * .5f, sb, 0f, 25);
             }
 
             tdI.Position = Position;
             if (active)
                 tdI.Draw(sb);
-            int cursorDiff = cursorPos - offset;
-            float xToDrawDelim = cursorDiff * length;
-            xToDrawDelim -= 2;
             if (mainDelim != null)
-                sb.DrawString(tdI.font, mainDelim, tdI.Position + new Vector2(xToDrawDelim, 0), tdI.color);
+            {
+                cursorPos -= offset;
+                string text = offsetText;
+                string measure = "";
+                for (int i = 0; i < cursorPos && text.Length > 0 && i < text.Length; i++)
+                {
+                    measure += text[i];
+                }
+                sb.DrawString(tdI.font, mainDelim, tdI.Position + new Vector2(tdI.font.MeasureString(measure).X - 3, 0), tdI.color);
+                cursorPos += offset;
+            }
             //base.Draw();
         }
 

@@ -204,6 +204,30 @@ namespace YogUILibrary.Structs
             sb.Draw(texture, drawBR, bottomRight, Color.White);
         }
 
+        public void DrawContent(SpriteBatch sb, Vector2 position, int contentWidth, int contentHeight, Color drawColor)
+        {
+            Rectangle topLeft = new Rectangle(1, 1, leftMostPatch - 1, topMostPatch - 1);
+            Rectangle topMiddle = new Rectangle(leftMostPatch, 1, (rightMostPatch - leftMostPatch), topMostPatch - 1);
+
+            Rectangle Left = new Rectangle(1, topMostPatch, leftMostPatch - 1, (bottomMostPatch - topMostPatch));
+            Rectangle Middle = new Rectangle(leftMostPatch, topMostPatch, (rightMostPatch - leftMostPatch), (bottomMostPatch - topMostPatch));
+
+            int topMiddleWidth = topMiddle.Width;
+            int leftMiddleHeight = Left.Height;
+            float scaleMiddleByHorizontally = ((float)contentWidth / (float)topMiddleWidth);
+            float scaleMiddleByVertically = ((float)contentHeight / (float)leftMiddleHeight);
+            // if (scaleMiddleByVertically < 1) scaleMiddleByVertically = 1;
+            // if (scaleMiddleByHorizontally < 1) scaleMiddleByHorizontally = 1;
+
+            Vector2 drawTL = position;
+            Vector2 drawT = drawTL + new Vector2(topLeft.Width, 0);
+
+            Vector2 drawM = drawT + new Vector2(0, topMiddle.Height);
+
+            Vector2 bottomRight = new Vector2(drawM.X + (Middle.Width * scaleMiddleByHorizontally), drawM.Y + (Middle.Height * scaleMiddleByVertically));
+            DrawManager.Draw_Box(drawM, bottomRight, drawColor, sb, 0f, 150);
+        }
+
         public Vector2 getCenter(int contentWidth, int contentHeight)
         {
             Rectangle topLeft = new Rectangle(1, 1, leftMostPatch - 1, topMostPatch - 1);

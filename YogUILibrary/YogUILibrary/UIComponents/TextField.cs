@@ -26,13 +26,13 @@ namespace YogUILibrary.UIComponents
             }
             set
             {
-                if (value.Length > numCharsAllowed())
-                    _placeHolderText = value.Remove(numCharsAllowed());
+                if (value.Length > allowedWidth())
+                    _placeHolderText = value.Remove(allowedWidth());
                 else
                     _placeHolderText = value;
             }
         }
-        
+
         DropDownList contextMenu;
 
         public NinePatch patchNormal;
@@ -48,11 +48,11 @@ namespace YogUILibrary.UIComponents
         {
             get
             {
-                return input.numCharsAllowed == -1;
+                return input.allowedWidth == -1;
             }
             set
             {
-                input.numCharsAllowed = value ? -1 : numCharsAllowed();
+                input.allowedWidth = value ? -1 : allowedWidth();
             }
         }
 
@@ -99,15 +99,33 @@ namespace YogUILibrary.UIComponents
             contextMenu.AddItem(new DropDownItem("Paste", input.Paste));
             contextMenu.AddItem(new DropDownItem("Cut", input.Cut));
             base.UIC_Initialize();
-            input.numCharsAllowed = numCharsAllowed();
+            input.allowedWidth = allowedWidth();
 
             InputManager.BindMouse(() =>
             {
                 input.selected = hovering;
-
-                float charLength = input.getCharLength();
+                if (!hovering) return;
                 float xDist = InputManager.GetMousePos().X - input.BoundBox.Left;
-                int pos = (int)MathHelper.Clamp(xDist / charLength, 0, input.input.Length - input.offset);
+                string offset = input.offsetText;
+                int maxBelow = offset.Length;
+                string cur = "";
+                for (int i = 0; i < offset.Length; i++)
+                {
+                    cur += offset[i];
+                    float xWidth = input.tdI.font.MeasureString(cur).X;
+                    if (xWidth < xDist)
+                    {
+                        maxBelow = i + 1;
+                    }
+                    if (xDist < xWidth && i == 0)
+                    {
+                        maxBelow = 0;
+                        break;
+                    }
+                    if (xWidth >= xDist)
+                        break;
+                }
+                int pos = maxBelow;
                 pos += input.offset;
                 input.cursorPos = pos;
                 input.selectionStart = pos;
@@ -122,16 +140,37 @@ namespace YogUILibrary.UIComponents
             {
                 if (dragging)
                 {
-                    float charLength = input.getCharLength();
                     float xDist = InputManager.GetMousePos().X - input.BoundBox.Left;
-                    int pos = (int)MathHelper.Clamp(xDist / charLength, 0, input.input.Length - input.offset);
-                    int negablePos = (int)(xDist / charLength);
-                    negablePos += input.offset;
-                    if (negablePos < 0)
+                    string offset = input.offsetText;
+                    int maxBelow = offset.Length;
+                    string cur = "";
+                    for (int i = 0; i < offset.Length; i++)
                     {
-                        input.offset += negablePos;
+                        cur += offset[i];
+                        float xWidth = input.tdI.font.MeasureString(cur).X;
+                        if (xWidth < xDist)
+                        {
+                            maxBelow = i + 1;
+                        }
+                        if (xDist < xWidth && i == 0)
+                        {
+                            maxBelow = 0;
+                            break;
+                        }
+                        if(xWidth >= xDist)
+                            break;
+                    }
+                    if (xDist < 0)
+                    {
+                        input.offset += -1;
                         if (input.offset < 0) input.offset = 0;
                     }
+                    if (xDist > input.BoundBox.Width)
+                    {
+                        input.offset += 1;
+                        if (input.offset > input.input.Length - offset.Length) input.offset = input.input.Length - offset.Length;
+                    }
+                    int pos = maxBelow;
                     pos += input.offset;
                     input.selectionEnd = pos;
                     input.cursorPos = pos;
@@ -143,12 +182,6 @@ namespace YogUILibrary.UIComponents
                     input.selected = hovering;
                     if (hovering)
                     {
-                        float charLength = input.getCharLength();
-                        float xDist = InputManager.GetMousePos().X - input.BoundBox.Left;
-                        int pos = (int)MathHelper.Clamp(xDist / charLength, 0, input.input.Length - input.offset);
-                        pos += input.offset;
-                        input.cursorPos = pos;
-
                         contextMenu.Position = InputManager.GetMousePosV() - new Vector2(3);
                         contextMenu.Show();
                     }
@@ -156,10 +189,9 @@ namespace YogUILibrary.UIComponents
 
         }
 
-        private int numCharsAllowed()
+        private int allowedWidth()
         {
-            float length = input.tdI.font.MeasureString(" ").X;
-            return (int)(width / length);
+            return (int)width;
         }
 
         private bool textExtends()
@@ -205,7 +237,7 @@ namespace YogUILibrary.UIComponents
                 {
                     hovering = false;
                 }
-                
+
                 input.Update(time);
                 contextMenu.Update(time);
             }
@@ -259,7 +291,7 @@ namespace YogUILibrary.UIComponents
             revalidate();
             onTextEnter(GetText());
         }
-     
+
         private void TextChanged()
         {
             revalidate();
@@ -285,7 +317,7 @@ namespace YogUILibrary.UIComponents
             this.active = active;
             input.SetActive(active);
         }
-        
+
         public void SetSelected(bool selected)
         {
             active = active;

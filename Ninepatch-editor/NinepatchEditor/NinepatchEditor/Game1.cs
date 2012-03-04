@@ -33,7 +33,9 @@ namespace NinepatchEditor
         public TextField yStart;
         public TextField yEnd;
         public Button refreshNinepatch;
+        public CheckBox drawContent;
         public SliderBar patchScale;
+
 
         public Button loadNinepatch;
         public Button saveNinepatchAs;
@@ -42,6 +44,7 @@ namespace NinepatchEditor
         public Rectangle patchInfoDraw = new Rectangle(201, 1, 800 - 201, 50);
         public Rectangle patchDisplayDraw = new Rectangle(201, 51, 800 - 201, 480 - 51);
         public Rectangle patchTextureDraw = new Rectangle(1, 51, 200, 480 - 51);
+
 
         public Rectangle testDrawing = new Rectangle(0, 0, 1, 1);
 
@@ -100,9 +103,13 @@ namespace NinepatchEditor
             yStart.placeHolderText = "Y start";
             yEnd.placeHolderText = "Y end";
 
-            refreshNinepatch = new Button(new Vector2(420, 23), "Refresh", buttonFont, refresh);
+            refreshNinepatch = new Button(new Vector2(420, 18), "Refresh", buttonFont, refresh);
 
             patchScale = new SliderBar(new Vector2(465, 9), 225, 30, 0, 100, buttonFont);
+
+            drawContent = new CheckBox(new Vector2(390, 45), buttonFont);
+            drawContent.SetLabel("Draw content");
+            drawContent.SetChecked(true);
 
             scaleX = new RadioButton(new Vector2(700, 9), buttonFont, "Scale X");
             scaleY = new RadioButton(new Vector2(700, 23), buttonFont, "Scale Y");
@@ -119,12 +126,9 @@ namespace NinepatchEditor
 
         public void refresh()
         {
-            Texture2D wat = createImageNinepatch();
-            curNinepatch.LoadFromTexture(wat);
-            using (FileStream fs = new FileStream(@"C:\users\josh\desktop\wat.png", FileMode.Create))
-            {
-                wat.SaveAsPng(fs, wat.Width, wat.Height);
-            }
+            Texture2D refreshTexture = createImageNinepatch();
+            if (refreshTexture == null) return;
+            curNinepatch.LoadFromTexture(refreshTexture);
         }
 
         /// <summary>
@@ -157,6 +161,8 @@ namespace NinepatchEditor
             scaleX.Update(gameTime);
             scaleY.Update(gameTime);
             scaleXY.Update(gameTime);
+            drawContent.Update(gameTime);
+
 
             base.Update(gameTime);
         }
@@ -177,16 +183,19 @@ namespace NinepatchEditor
 
         public void loadImage(string path)
         {
-            Texture2D texture = Texture2D.FromStream(GraphicsDevice, new FileStream(path, FileMode.Open));
-            if (NinePatch.isAlreadyNinepatch(texture))
+            using (FileStream fs = new FileStream(path, FileMode.Open))
             {
-                loadImageExisting(texture);
+                Texture2D texture = Texture2D.FromStream(GraphicsDevice, fs);
+                if (NinePatch.isAlreadyNinepatch(texture))
+                {
+                    loadImageExisting(texture);
+                }
+                else
+                {
+                    loadImageNew(texture);
+                }
+                computeScale();
             }
-            else
-            {
-                loadImageNew(texture);
-            }
-            computeScale();
         }
 
         public void loadImageExisting(Texture2D texture)
@@ -269,7 +278,7 @@ namespace NinepatchEditor
 
         public void saveImage()
         {
-            if (curNinepatch.texture == null) return;
+            if (curNinepatch.texture == null || curTexture == null) return;
             var save = new System.Windows.Forms.SaveFileDialog();
             save.SupportMultiDottedExtensions = true;
             save.DefaultExt = ".9.png";
@@ -277,6 +286,7 @@ namespace NinepatchEditor
             save.ShowDialog();
             String fileName = save.FileName;
             Texture2D toSave = createImageNinepatch();
+            if (toSave == null) return;
             try
             {
                 using (FileStream fs = new FileStream(fileName, FileMode.Create))
@@ -289,6 +299,7 @@ namespace NinepatchEditor
 
         public Texture2D createImageNinepatch()
         {
+            if (curNinepatch.texture == null || curTexture == null) return null;
             int leftMost = xStart.textValid ? Convert.ToInt32(xStart.GetText()) : 0;
             int rightMost = xEnd.textValid ? Convert.ToInt32(xEnd.GetText()) : 1;
             int topMost = yStart.textValid ? Convert.ToInt32(yStart.GetText()) : 0;
@@ -366,10 +377,10 @@ namespace NinepatchEditor
             yStart.Draw(spriteBatch);
             yEnd.Draw(spriteBatch);
             refreshNinepatch.Draw(spriteBatch);
-            patchScale.Draw(spriteBatch);
             scaleX.Draw(spriteBatch);
             scaleY.Draw(spriteBatch);
             scaleXY.Draw(spriteBatch);
+            drawContent.Draw(spriteBatch);
 
             if (curTexture != null)
             {
@@ -381,20 +392,27 @@ namespace NinepatchEditor
             if (curNinepatch.texture != null)
             {
                 computeScale();
+                patchScale.Draw(spriteBatch);
                 int height = curNinepatch.bottomMostPatch - curNinepatch.topMostPatch;
                 int width = curNinepatch.rightMostPatch - curNinepatch.leftMostPatch;
+
                 if (scaleX.selected)
                 {
-                    curNinepatch.Draw(spriteBatch, drawPos - curNinepatch.getCenter(width + patchScale.getNumber() + 5, height), width + (patchScale.getNumber() - 5), height);
-                    
+                    curNinepatch.Draw(spriteBatch, drawPos - curNinepatch.getCenter(width + patchScale.getNumber(), height), width + (patchScale.getNumber()), height);
+                    if (drawContent.GetChecked())
+                        curNinepatch.DrawContent(spriteBatch, drawPos - curNinepatch.getCenter(width + patchScale.getNumber(), height), width + (patchScale.getNumber()), height, Color.Red);
                 }
                 else if (scaleY.selected)
                 {
-                    curNinepatch.Draw(spriteBatch, drawPos - curNinepatch.getCenter(width, height + patchScale.getNumber() + 5), width, height + (patchScale.getNumber() - 5));
+                    curNinepatch.Draw(spriteBatch, drawPos - curNinepatch.getCenter(width, height + patchScale.getNumber()), width, height + (patchScale.getNumber()));
+                    if (drawContent.GetChecked())
+                        curNinepatch.DrawContent(spriteBatch, drawPos - curNinepatch.getCenter(width, height + patchScale.getNumber()), width, height + (patchScale.getNumber()), Color.Red);
                 }
                 else if (scaleXY.selected)
                 {
-                    curNinepatch.Draw(spriteBatch, drawPos - curNinepatch.getCenter(width + patchScale.getNumber() + 5, height + patchScale.getNumber() + 5), width + (patchScale.getNumber() - 5), height + (patchScale.getNumber() - 5));
+                    curNinepatch.Draw(spriteBatch, drawPos - curNinepatch.getCenter(width + patchScale.getNumber(), height + patchScale.getNumber()), width + (patchScale.getNumber()), height + (patchScale.getNumber()));
+                    if (drawContent.GetChecked())
+                        curNinepatch.DrawContent(spriteBatch, drawPos - curNinepatch.getCenter(width + patchScale.getNumber(), height + patchScale.getNumber()), width + (patchScale.getNumber()), height + (patchScale.getNumber()), Color.Red);
                 }
             }
 
