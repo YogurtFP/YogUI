@@ -137,11 +137,12 @@ namespace YogUILibrary.Structs
                 {
                     if (leftMostPatch == -1) leftMostPatch = i;
                 }
-                else if (curPixel.A == 0 && leftMostPatch != -1 && rightMostPatch == -1)
+                if (curPixel.A != 0 && leftMostPatch != -1)
                 {
-                    rightMostPatch = i - 1;
-                    break;
+                    rightMostPatch = i;
                 }
+                if (curPixel.A == 0 && leftMostPatch != -1 && rightMostPatch != -1)
+                    break;
             }
             for (int i = 0; i < data.Length; i += texture.Width)
             {
@@ -150,11 +151,12 @@ namespace YogUILibrary.Structs
                 {
                     if (topMostPatch == -1) topMostPatch = i / texture.Width;
                 }
-                else if (curPixel.A == 0 && topMostPatch != -1 && bottomMostPatch == -1)
+                if (curPixel.A != 0 && topMostPatch != -1)
                 {
-                    bottomMostPatch = (i / texture.Width) - 1;
-                    break;
+                    bottomMostPatch = (i / texture.Width);
                 }
+                if (curPixel.A == 0 && topMostPatch != -1 && bottomMostPatch != -1)
+                    break;
             }
         }
 
